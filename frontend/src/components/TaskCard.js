@@ -24,13 +24,16 @@ export default function TaskCard({ task, toggleStatus, deleteTask, toggleStar, e
             className="bg-gray-700 p-1 rounded w-full mb-2"
             type="datetime-local"
             value={newDueTime}
-            onChange={(e) => setDueDate(e.target.value)}
+            onChange={(e) => {
+              console.log("Selected Date:", e.target.value); // Check selected date
+              setDueDate(e.target.value)}}
           />
         </>
       ) : (
         <>
           <h3 className="text-white font-bold">{task.title}</h3>
           <p className="text-gray-400 text-sm">{task.description}</p>
+
         </>
       )}
 
