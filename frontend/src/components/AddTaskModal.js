@@ -34,6 +34,7 @@ export default function AddTaskModal({ addTask, closeModal }) {
           >
             Cancel
           </button>
+          
           <button
             onClick={() => {
               addTask(title, description, dueDate);
