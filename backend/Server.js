@@ -23,8 +23,14 @@ const taskSchema = new mongoose.Schema({
 });
 
 const Task = mongoose.model("Task", taskSchema);
-
-// API to add a task
+app.get("/tasks", async (req, res) => {
+  try {
+    const tasks = await Task.find();
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching tasks", error });
+  }
+});
 app.post("/addTask", async (req, res) => {
   try {
     const { id, title,description } = req.body;
@@ -52,6 +58,7 @@ app.put("/editTask/:id", async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
     }
   });
+  
   
 app.delete("/deleteTask/:id", async (req, res) => {
     try {
