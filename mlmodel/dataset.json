@@ -1,0 +1,461 @@
+{
+    "dataset": [
+      {
+        "level": 1,
+        "description": "Basic number recognition and counting",
+        "questions": [
+          {
+            "id": "1-1",
+            "question": "Count the apples: 🍎 🍎 🍎. How many apples are there?",
+            "answer": 3,
+            "options": [2, 3, 4, 5],
+            "visual_support": true
+          },
+          {
+            "id": "1-2",
+            "question": "What number comes after 2?",
+            "answer": 3,
+            "options": [1, 3, 4, 5],
+            "visual_support": true
+          },
+          {
+            "id": "1-3",
+            "question": "Count the stars: ⭐ ⭐. How many stars are there?",
+            "answer": 2,
+            "options": [1, 2, 3, 4],
+            "visual_support": true
+          },
+          {
+            "id": "1-4",
+            "question": "Match the number to the correct amount: 5 = ?",
+            "answer": "5 fingers",
+            "options": ["3 fingers", "4 fingers", "5 fingers", "6 fingers"],
+            "visual_support": true
+          },
+          {
+            "id": "1-5",
+            "question": "What number is this: 4?",
+            "answer": "Four",
+            "options": ["Three", "Four", "Five", "Six"],
+            "visual_support": true
+          },
+          {
+            "id": "1-6",
+            "question": "Count the flowers: 🌸 🌸 🌸 🌸. How many flowers are there?",
+            "answer": 4,
+            "options": [2, 3, 4, 5],
+            "visual_support": true
+          },
+          {
+            "id": "1-7",
+            "question": "Which is bigger: 2 or 5?",
+            "answer": 5,
+            "options": [2, 5],
+            "visual_support": true
+          },
+          {
+            "id": "1-8",
+            "question": "Count the balloons: 🎈 🎈 🎈 🎈 🎈. How many balloons are there?",
+            "answer": 5,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "1-9",
+            "question": "What number comes before 3?",
+            "answer": 2,
+            "options": [1, 2, 3, 4],
+            "visual_support": true
+          },
+          {
+            "id": "1-10",
+            "question": "Find the number 1 in this group: 3, 1, 5, 2",
+            "answer": "Second position",
+            "options": ["First position", "Second position", "Third position", "Fourth position"],
+            "visual_support": true
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "description": "Simple addition with numbers 1-5",
+        "questions": [
+          {
+            "id": "2-1",
+            "question": "1 + 1 = ?",
+            "answer": 2,
+            "options": [1, 2, 3, 4],
+            "visual_support": true
+          },
+          {
+            "id": "2-2",
+            "question": "2 + 1 = ?",
+            "answer": 3,
+            "options": [2, 3, 4, 5],
+            "visual_support": true
+          },
+          {
+            "id": "2-3",
+            "question": "If you have 2 apples and get 2 more, how many apples do you have now?",
+            "answer": 4,
+            "options": [2, 3, 4, 5],
+            "visual_support": true
+          },
+          {
+            "id": "2-4",
+            "question": "3 + 1 = ?",
+            "answer": 4,
+            "options": [2, 3, 4, 5],
+            "visual_support": true
+          },
+          {
+            "id": "2-5",
+            "question": "2 + 2 = ?",
+            "answer": 4,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "2-6",
+            "question": "If you have 1 banana and get 3 more, how many bananas do you have now?",
+            "answer": 4,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "2-7",
+            "question": "3 + 2 = ?",
+            "answer": 5,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "2-8",
+            "question": "4 + 1 = ?",
+            "answer": 5,
+            "options": [4, 5, 6, 7],
+            "visual_support": true
+          },
+          {
+            "id": "2-9",
+            "question": "If you have 2 toy cars and get 3 more, how many toy cars do you have now?",
+            "answer": 5,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "2-10",
+            "question": "2 + 3 = ?",
+            "answer": 5,
+            "options": [4, 5, 6, 7],
+            "visual_support": true
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "description": "Addition and subtraction with numbers 1-10",
+        "questions": [
+          {
+            "id": "3-1",
+            "question": "5 + 2 = ?",
+            "answer": 7,
+            "options": [5, 6, 7, 8],
+            "visual_support": true
+          },
+          {
+            "id": "3-2",
+            "question": "4 + 3 = ?",
+            "answer": 7,
+            "options": [6, 7, 8, 9],
+            "visual_support": true
+          },
+          {
+            "id": "3-3",
+            "question": "If you have 6 stickers and use 2, how many stickers do you have left?",
+            "answer": 4,
+            "options": [2, 3, 4, 5],
+            "visual_support": true
+          },
+          {
+            "id": "3-4",
+            "question": "8 - 3 = ?",
+            "answer": 5,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "3-5",
+            "question": "3 + 5 = ?",
+            "answer": 8,
+            "options": [6, 7, 8, 9],
+            "visual_support": true
+          },
+          {
+            "id": "3-6",
+            "question": "10 - 4 = ?",
+            "answer": 6,
+            "options": [4, 5, 6, 7],
+            "visual_support": true
+          },
+          {
+            "id": "3-7",
+            "question": "If you have 7 candies and eat 3, how many candies do you have left?",
+            "answer": 4,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "3-8",
+            "question": "6 + 2 = ?",
+            "answer": 8,
+            "options": [7, 8, 9, 10],
+            "visual_support": true
+          },
+          {
+            "id": "3-9",
+            "question": "9 - 5 = ?",
+            "answer": 4,
+            "options": [2, 3, 4, 5],
+            "visual_support": true
+          },
+          {
+            "id": "3-10",
+            "question": "4 + 4 = ?",
+            "answer": 8,
+            "options": [6, 7, 8, 9],
+            "visual_support": true
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "description": "Mixed operations and simple problem-solving",
+        "questions": [
+          {
+            "id": "4-1",
+            "question": "You have 5 pencils. Your friend gives you 3 more. Then you lose 2. How many pencils do you have now?",
+            "answer": 6,
+            "options": [5, 6, 7, 8],
+            "visual_support": true
+          },
+          {
+            "id": "4-2",
+            "question": "7 + 5 = ?",
+            "answer": 12,
+            "options": [10, 11, 12, 13],
+            "visual_support": true
+          },
+          {
+            "id": "4-3",
+            "question": "10 + 5 - 3 = ?",
+            "answer": 12,
+            "options": [10, 11, 12, 13],
+            "visual_support": true
+          },
+          {
+            "id": "4-4",
+            "question": "What is 2 more than 9?",
+            "answer": 11,
+            "options": [10, 11, 12, 13],
+            "visual_support": true
+          },
+          {
+            "id": "4-5",
+            "question": "15 - 6 = ?",
+            "answer": 9,
+            "options": [7, 8, 9, 10],
+            "visual_support": true
+          },
+          {
+            "id": "4-6",
+            "question": "If you have 8 cookies and share them equally between 2 friends, how many cookies does each friend get?",
+            "answer": 4,
+            "options": [2, 3, 4, 5],
+            "visual_support": true
+          },
+          {
+            "id": "4-7",
+            "question": "There are 6 birds on a tree. 2 more join them. Then 3 fly away. How many birds are on the tree now?",
+            "answer": 5,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "4-8",
+            "question": "What is 5 less than 12?",
+            "answer": 7,
+            "options": [5, 6, 7, 8],
+            "visual_support": true
+          },
+          {
+            "id": "4-9",
+            "question": "6 + 7 = ?",
+            "answer": 13,
+            "options": [11, 12, 13, 14],
+            "visual_support": true
+          },
+          {
+            "id": "4-10",
+            "question": "You have 12 marbles and give away 5. How many marbles do you have left?",
+            "answer": 7,
+            "options": [5, 6, 7, 8],
+            "visual_support": true
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "description": "More complex problem-solving and beginning multiplication concepts",
+        "questions": [
+          {
+            "id": "5-1",
+            "question": "How many wheels do 3 bicycles have altogether?",
+            "answer": 6,
+            "options": [4, 5, 6, 7],
+            "visual_support": true
+          },
+          {
+            "id": "5-2",
+            "question": "2 × 5 = ?",
+            "answer": 10,
+            "options": [8, 9, 10, 11],
+            "visual_support": true
+          },
+          {
+            "id": "5-3",
+            "question": "You need 2 eggs to make one cake. How many eggs do you need to make 3 cakes?",
+            "answer": 6,
+            "options": [5, 6, 7, 8],
+            "visual_support": true
+          },
+          {
+            "id": "5-4",
+            "question": "If you have $20 and spend $12, how much money do you have left?",
+            "answer": 8,
+            "options": [6, 7, 8, 9],
+            "visual_support": true
+          },
+          {
+            "id": "5-5",
+            "question": "If there are 3 baskets with 4 oranges in each, how many oranges are there in total?",
+            "answer": 12,
+            "options": [10, 11, 12, 13],
+            "visual_support": true
+          },
+          {
+            "id": "5-6",
+            "question": "What is half of 14?",
+            "answer": 7,
+            "options": [5, 6, 7, 8],
+            "visual_support": true
+          },
+          {
+            "id": "5-7",
+            "question": "15 + 8 = ?",
+            "answer": 23,
+            "options": [21, 22, 23, 24],
+            "visual_support": true
+          },
+          {
+            "id": "5-8",
+            "question": "If a book costs $5 and you buy 3 books, how much do you spend in total?",
+            "answer": 15,
+            "options": [12, 13, 15, 18],
+            "visual_support": true
+          },
+          {
+            "id": "5-9",
+            "question": "20 - 7 = ?",
+            "answer": 13,
+            "options": [11, 12, 13, 14],
+            "visual_support": true
+          },
+          {
+            "id": "5-10",
+            "question": "You have 4 rows of chairs with 5 chairs in each row. How many chairs are there altogether?",
+            "answer": 20,
+            "options": [16, 18, 20, 24],
+            "visual_support": true
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "description": "Multiplication and division concepts with visual support",
+        "questions": [
+          {
+            "id": "6-1",
+            "question": "3 × 4 = ?",
+            "answer": 12,
+            "options": [9, 10, 12, 15],
+            "visual_support": true
+          },
+          {
+            "id": "6-2",
+            "question": "If you have 10 candies and share them equally among 5 friends, how many candies does each friend get?",
+            "answer": 2,
+            "options": [1, 2, 3, 5],
+            "visual_support": true
+          },
+          {
+            "id": "6-3",
+            "question": "What is 5 × 3?",
+            "answer": 15,
+            "options": [12, 13, 15, 18],
+            "visual_support": true
+          },
+          {
+            "id": "6-4",
+            "question": "If 6 children each have 2 balloons, how many balloons are there altogether?",
+            "answer": 12,
+            "options": [8, 10, 12, 14],
+            "visual_support": true
+          },
+          {
+            "id": "6-5",
+            "question": "16 ÷ 4 = ?",
+            "answer": 4,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "6-6",
+            "question": "If you put 25 stickers into groups of 5, how many groups will you have?",
+            "answer": 5,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "6-7",
+            "question": "4 × 4 = ?",
+            "answer": 16,
+            "options": [12, 14, 16, 18],
+            "visual_support": true
+          },
+          {
+            "id": "6-8",
+            "question": "If 3 friends each have 6 pencils, how many pencils do they have in total?",
+            "answer": 18,
+            "options": [15, 18, 21, 24],
+            "visual_support": true
+          },
+          {
+            "id": "6-9",
+            "question": "20 ÷ 5 = ?",
+            "answer": 4,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          },
+          {
+            "id": "6-10",
+            "question": "There are 24 cupcakes. If each box holds 6 cupcakes, how many boxes do you need?",
+            "answer": 4,
+            "options": [3, 4, 5, 6],
+            "visual_support": true
+          }
+        ]
+      }
+    ]
+  }
+  
