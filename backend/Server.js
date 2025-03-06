@@ -5,12 +5,9 @@ const mongoose = require("mongoose");
 const app = express();
 const PORT = 3016;
 
-// Middleware
 app.use(express.json());
 app.use(cors());
 
-
-// MongoDB Connection
 mongoose.connect("mongodb+srv://yaminireddy2023:LAKvtqcdAilizfhk@neurocluster0.utmzr.mongodb.net/", {
   useNewUrlParser: true,
   useUnifiedTopology: true,

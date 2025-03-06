@@ -1,48 +1,63 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { handleError, handleSuccess } from "../utils";
 
 export default function Signup() {
-  const [isParent, setIsParent] = useState(false);
-  const [formData, setFormData] = useState({
+  const [signupInfo, setSignupInfo] = useState({
     name: "",
     email: "",
     password: "",
-    isParent: false,
-    child: { name: "", email: "", password: "" },
+    isLogin:"",
+
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    if (type === "checkbox") {
-      setIsParent(checked);
-      setFormData((prev) => ({ ...prev, [name]: checked }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
-  };
-
-  const handleChildChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      child: { ...prev.child, [name]: value },
-    }));
+    setSignupInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    const { name, email, password,isLogin } = signupInfo;
+
+    if (!name || !email || !password) {
+      return handleError("Name, email, and password are required");
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/signup", {
+        method: "POST",
+          headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password,isLogin }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        handleSuccess(result.message);
+        setTimeout(() => navigate("/login"), 1000);
+      } else {
+        handleError(result.message || "Something went wrong");
+      }
+    } catch (err) {
+      console.error("Signup error:", err);
+      handleError(err.message);
+    }
   };
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-900 text-white">
-      <form onSubmit={handleSubmit} className="bg-gray-800 p-8 rounded-lg w-96 shadow-lg">
+      <form onSubmit={handleSignup} className="bg-gray-800 p-8 rounded-lg w-96 shadow-lg">
         <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
 
         <input
           type="text"
           name="name"
           placeholder="Name"
-          value={formData.name}
+          value={signupInfo.name}
           onChange={handleChange}
           className="w-full p-2 mb-3 rounded bg-gray-700 focus:outline-none"
           required
@@ -52,7 +67,7 @@ export default function Signup() {
           type="email"
           name="email"
           placeholder="Email"
-          value={formData.email}
+          value={signupInfo.email}
           onChange={handleChange}
           className="w-full p-2 mb-3 rounded bg-gray-700 focus:outline-none"
           required
@@ -62,59 +77,19 @@ export default function Signup() {
           type="password"
           name="password"
           placeholder="Password"
-          value={formData.password}
+          value={signupInfo.password}
           onChange={handleChange}
           className="w-full p-2 mb-3 rounded bg-gray-700 focus:outline-none"
           required
         />
 
-        <div className="flex items-center mb-3">
-          <input
-            type="checkbox"
-            name="isParent"
-            checked={isParent}
-            onChange={handleChange}
-            className="mr-2"
-          />
-          <label>Are you a Parent?</label>
-        </div>
-
-        {isParent && (
-          <div className="bg-gray-700 p-4 rounded">
-            <h3 className="text-lg font-semibold mb-2">Child's Credentials</h3>
-            <input
-              type="text"
-              name="name"
-              placeholder="Child's Name"
-              value={formData.child.name}
-              onChange={handleChildChange}
-              className="w-full p-2 mb-2 rounded bg-gray-600 focus:outline-none"
-              required={isParent}
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Child's Email"
-              value={formData.child.email}
-              onChange={handleChildChange}
-              className="w-full p-2 mb-2 rounded bg-gray-600 focus:outline-none"
-              required={isParent}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Child's Password"
-              value={formData.child.password}
-              onChange={handleChildChange}
-              className="w-full p-2 mb-2 rounded bg-gray-600 focus:outline-none"
-              required={isParent}
-            />
-          </div>
-        )}
-
         <button type="submit" className="w-full p-2 mt-4 bg-blue-500 rounded hover:bg-blue-600">
           Sign Up
         </button>
+
+        <span className="block text-center mt-2">
+          Already have an account? <Link to="/login" className="text-blue-400">Login</Link>
+        </span>
       </form>
     </div>
   );
