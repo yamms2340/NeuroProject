@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const {
   GoogleGenerativeAI,
   HarmCategory,
@@ -20,7 +22,7 @@ const generationConfig = {
   responseMimeType: "text/plain",
 };
 
-async function run() {
+async function run(prompt) {
   const chatSession = model.startChat({
     generationConfig,
     history: [
@@ -99,8 +101,12 @@ async function run() {
     ],
   });
 
-  const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
+  const result = await chatSession.sendMessage(prompt);
   console.log(result.response.text());
+  return result.response.text()
 }
 
-run();
+// run();
+
+//exporting the run function
+module.exports = {run};
