@@ -7,7 +7,8 @@ const PORT = 3016;
 
 // Middleware
 app.use(express.json());
-app.use(cors());  // ✅ Allow frontend (port 3000) to access backend
+app.use(cors());
+
 
 // MongoDB Connection
 mongoose.connect("mongodb+srv://yaminireddy2023:LAKvtqcdAilizfhk@neurocluster0.utmzr.mongodb.net/", {
