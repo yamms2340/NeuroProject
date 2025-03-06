@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import TaskList from "./components/TaskList";
 import AddTaskModal from "./components/AddTaskModal";
+import { Navigate, Route, Routes } from 'react-router-dom';
+
 import { addTaskToDB,deleteTaskFromDB,editTaskInDB } from "./components/free";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
 const formatDate = (dateString) => {
   const [year, month, day] = dateString.split("-");
   return `${day}-${month}-${year}`;
@@ -12,7 +17,9 @@ export default function App() {
   const [tasks, setTasks] = useState([]); 
   const [filterType, setFilterType] = useState("all");
   const [showModal, setShowModal] = useState(false);
-  const [alertedTasks, setAlertedTasks] = useState(new Set()); // Track alerted task IDs
+  const [alertedTasks, setAlertedTasks] = useState(new Set()); 
+  const [isloggedin,setisloggedin]=useState(false)
+  const [isSignUp,setIsSignUp]=useState(false)
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -108,23 +115,32 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex">
-      <Sidebar filterTasks={filterTasks} filterType={filterType} />
-      <div className="w-3/4 p-5">
-        {tasks.length >=0 ? (
-          <TaskList
-            tasks={filteredTasks}
-            toggleStatus={toggleStatus}
-            deleteTask={deleteTask}
-            toggleStar={toggleStar}
-            editTask={editTask}
-            openAddTaskModal={() => setShowModal(true)}
-          />
-        ) : (
-          <p className="text-white text-center">No tasks available</p> 
-        )}
-      </div>
-      {showModal && <AddTaskModal addTask={addTask} closeModal={() => setShowModal(false)} />}
+<div className="min-h-screen bg-gray-900">
+<Routes>
+        <Route path='/' element={<Navigate to="/login" />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/home' element={<Home  filterTasks={filterTasks}
+      filterType={filterType}
+      tasks={tasks}
+      filteredTasks={filteredTasks}
+      toggleStatus={toggleStatus}
+      deleteTask={deleteTask}
+      toggleStar={toggleStar}
+      editTask={editTask}
+      showModal={showModal}
+      setShowModal={setShowModal}
+      addTask={addTask}
+      isloggedin={isloggedin}
+      setisloggedin={setisloggedin}
+      isSignUp={isSignUp}
+      setIsSignUp={setIsSignUp}
+        
+      />}/>
+      
+
+      </Routes>
+
     </div>
   );
 }
