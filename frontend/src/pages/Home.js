@@ -1,13 +1,51 @@
 import Sidebar from "../Sidebar";
 import TaskList from "../components/TaskList";
 import AddTaskModal from "../components/AddTaskModal";
-import '../index.css'
+import { useNavigate } from "react-router-dom";
+import '../index.css';
+
 const Home = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, deleteTask, toggleStar, editTask, showModal, setShowModal, addTask }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const email = localStorage.getItem("email"); // Assuming you store user email in localStorage
+
+      const response = await fetch("http://localhost:3016/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }), // Send user email to logout
+      });
+
+      if (response.ok) {
+        localStorage.removeItem("token"); // Remove token only on success
+        localStorage.removeItem("email");
+        navigate("/login"); // Redirect to login page
+      } else {
+        console.error("Logout failed:", await response.json());
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 flex">
       <Sidebar filterTasks={filterTasks} filterType={filterType} />
       <div className="w-3/4 p-5">
-        {tasks.length > 0 ? (
+        <div className="flex justify-between items-center">
+          <h1 className="text-white text-2xl font-bold">Task Manager</h1>
+          <button 
+            onClick={handleLogout} 
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition duration-300"
+          >
+            Logout
+          </button>
+        </div>
+        {tasks.length >= 0 ? (
           <TaskList
             tasks={filteredTasks}
             toggleStatus={toggleStatus}
