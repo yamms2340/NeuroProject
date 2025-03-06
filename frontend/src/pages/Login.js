@@ -3,6 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../utils";
 
+
+
+
+
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
@@ -34,17 +38,15 @@ export default function Login() {
       });
 
       const result = await response.json();
-
-      if (result.success) {
-        handleSuccess(result.message);
-        localStorage.setItem("token", result.token); // Store auth token
-        setTimeout(() => {
-          navigate("/home"); // Redirect after successful login
-        }, 1000);
+      console.log(result);
+      if (result.message === "success") {
+        console.log("Redirecting to home...");
+        window.location.href = "/home"; // Redirects to the home page
       } else {
-        handleError(result.message || "Invalid credentials");
+      alert("Invalid credentials..")
       }
     } catch (err) {
+        alert("Invalid credentials..")
       console.error("Login error:", err);
       handleError(err.message);
     }
