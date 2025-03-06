@@ -35,6 +35,9 @@ export default function Signup() {
       });
 
       const result = await response.json();
+      if(result.message=="already"){
+        alert("You can log in directly")
+      }
 
       if (response.ok) {
         handleSuccess(result.message);

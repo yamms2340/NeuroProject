@@ -9,11 +9,13 @@ const Home = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, del
 
   const handleLogout = async () => {
     try {
+      console.log("Logging out...");
+      window.location.href = "/signup"; 
       const token = localStorage.getItem("token");
-      const email = localStorage.getItem("email"); // Assuming you store user email in localStorage
+      const email = localStorage.getItem("email"); 
 
-      const response = await fetch("http://localhost:3016/logout", {
-        method: "POST",
+      const response = await fetch("http://localhost:8080/logout", {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
