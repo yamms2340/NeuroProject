@@ -6,41 +6,57 @@ export default function TaskCard({ task, toggleStatus, deleteTask, toggleStar, e
   const [newDueTime, setDueDate] = useState(task.dueTime);
   const [newDescription, setDescription] = useState(task.description);
 
+  const date = new Date();
+  const formattedDate = new Intl.DateTimeFormat("en-US").format(date); // Displays as month/day/year
+  console.log("Current Date:", formattedDate);
+
   return (
     <div className="bg-gray-800 p-4 rounded-lg shadow-md w-full relative">
       {isEditing ? (
         <>
           <input
-            className="bg-gray-700 p-1 rounded w-full mb-2"
+            className="bg-gray-700 p-1 rounded w-full mb-2 text-white"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
+            placeholder="Title"
           />
           <input
-            className="bg-gray-700 p-1 rounded w-full mb-2"
+            className="bg-gray-700 p-1 rounded w-full mb-2 text-white"
             value={newDescription}
             onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
           />
+          
+          {/* Date Input Field */}
+          <label htmlFor="dueDate" className="text-white block mb-1">
+            Due Date:
+          </label>
           <input
-            className="bg-gray-700 p-1 rounded w-full mb-2"
-            type="datetime-local"
+            className="bg-gray-700 p-1 rounded w-full mb-2 text-white"
+            type="date"
+            id="dueDate"
             value={newDueTime}
-            onChange={(e) => {
-              console.log("Selected Date:", e.target.value); // Check selected date
-              setDueDate(e.target.value)}}
+            onChange={(e) => setDueDate(e.target.value)}
           />
         </>
       ) : (
         <>
           <h3 className="text-white font-bold">{task.title}</h3>
           <p className="text-gray-400 text-sm">{task.description}</p>
-
+          {task.dueTime && (
+            <p className="text-gray-400 text-sm">
+              Due Date: {new Intl.DateTimeFormat("en-US").format(new Date(task.dueTime))}
+            </p>
+          )}
         </>
       )}
 
       <div className="flex justify-between mt-2">
         <button
           onClick={() => toggleStatus(task.id)}
-          className={`px-3 py-1 rounded ${task.status === "completed" ? "bg-green-500" : "bg-red-500"} text-white`}
+          className={`px-3 py-1 rounded ${
+            task.status === "completed" ? "bg-green-500" : "bg-red-500"
+          } text-white`}
         >
           {task.status === "completed" ? "Completed" : "Incomplete"}
         </button>
@@ -69,6 +85,6 @@ export default function TaskCard({ task, toggleStatus, deleteTask, toggleStar, e
           </button>
         </div>
       </div>
-    </div>
-  );
+ </div>
+);
 }

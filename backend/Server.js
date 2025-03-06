@@ -19,7 +19,7 @@ const taskSchema = new mongoose.Schema({
   _id: String,
   title: { type: String, required: true },
   description:{type:String},
-  time:{type:String}
+  dueDate:{type:String}
 });
 
 const Task = mongoose.model("Task", taskSchema);
@@ -77,5 +77,5 @@ app.delete("/deleteTask/:id", async (req, res) => {
   
 // Start the server
 app.listen(3016, () => {
-  console.log(`🚀 Backend running ...}`);
+  console.log("🚀 Backend running..");
 });
