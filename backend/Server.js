@@ -19,7 +19,7 @@ const taskSchema = new mongoose.Schema({
   _id: String,
   title: { type: String, required: true },
   description:{type:String},
-  time:{type:String}
+  dueDate:{type:String}
 });
 
 const Task = mongoose.model("Task", taskSchema);
@@ -33,8 +33,8 @@ app.get("/tasks", async (req, res) => {
 });
 app.post("/addTask", async (req, res) => {
   try {
-    const { id, title,description } = req.body;
-    const newTask = new Task({ _id: String(id), title,description});
+    const { id, title,description,dueDate } = req.body;
+    const newTask = new Task({ _id: String(id), title,description,dueDate});
     await newTask.save();
     res.json({ message: "Task added successfully", task: newTask });
   } catch (error) {
@@ -44,11 +44,11 @@ app.post("/addTask", async (req, res) => {
 app.put("/editTask/:id", async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, description } = req.body;
+      const { title, description,dueDate } = req.body;
   
       const updatedTask = await Task.findByIdAndUpdate(
         id,
-        { title, description },
+        { title, description,dueDate },
         { new: true }
       );
   

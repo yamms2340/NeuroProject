@@ -4,7 +4,7 @@ export default function TaskList({ tasks, toggleStatus, deleteTask, toggleStar, 
   return (
     <div className="grid grid-cols-2 gap-4">
       {/* Render tasks if available */}
-      {tasks.length > 0 ? (
+      {tasks.length >=0 ? (
         tasks.map((task) => (
           <TaskCard 
             key={task.id} 
