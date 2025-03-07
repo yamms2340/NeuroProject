@@ -1,0 +1,44 @@
+{
+    "assessment_questions": [
+      {
+        "question": "If 2 + 3 = 5, then 3 + 5 = ?",
+        "options": ["1) 6", "2) 7", "3) 8", "4) 9"],
+        "answer": "3) 8"
+      },
+      {
+        "question": "What comes next: 2, 4, 6, 8, ?",
+        "options": ["1) 9", "2) 10", "3) 12", "4) 14"],
+        "answer": "2) 10"
+      },
+      {
+        "question": "If all dogs have four legs, and Spot is a dog, how many legs does Spot have?",
+        "options": ["1) 2", "2) 3", "3) 4", "4) 5"],
+        "answer": "3) 4"
+      },
+      {
+        "question": "Which is different from the others: apple, banana, carrot, orange",
+        "options": ["1) apple", "2) banana", "3) carrot", "4) orange"],
+        "answer": "3) carrot"
+      },
+      {
+        "question": "Tom has 5 marbles. He gives 2 to his friend. How many marbles does Tom have now?",
+        "options": ["1) 2", "2) 3", "3) 4", "4) 5"],
+        "answer": "2) 3"
+      },
+      {
+        "question": "If today is Monday, what day will it be after 3 days?",
+        "options": ["1) Tuesday", "2) Wednesday", "3) Thursday", "4) Friday"],
+        "answer": "3) Thursday"
+      },
+      {
+        "question": "If 3 × 2 = 6, then 4 × 3 = ?",
+        "options": ["1) 6", "2) 7", "3) 10", "4) 12"],
+        "answer": "4) 12"
+      },
+      {
+        "question": "Sally is taller than Tom. Tom is taller than Mark. Who is the shortest?",
+        "options": ["1) Sally", "2) Tom", "3) Mark", "4) Can't tell"],
+        "answer": "3) Mark"
+      }
+    ]
+  }  
