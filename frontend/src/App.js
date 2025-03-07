@@ -8,10 +8,6 @@ import { addTaskToDB,deleteTaskFromDB,editTaskInDB } from "./components/free";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-const formatDate = (dateString) => {
-  const [year, month, day] = dateString.split("-");
-  return `${day}-${month}-${year}`;
-};
 const API_URL = "http://localhost:3016/tasks"; 
 export default function App() {
   const [tasks, setTasks] = useState([]); 
@@ -20,15 +16,16 @@ export default function App() {
   const [alertedTasks, setAlertedTasks] = useState(new Set()); 
   const [isloggedin,setisloggedin]=useState(false)
   const [isSignUp,setIsSignUp]=useState(false)
-
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const response = await fetch(API_URL);
         const data = await response.json();
         const currentDate = new Date().toISOString().split('T')[0]; // This gives the format "YYYY-MM-DD"
-
-        const formattedTasks = data.map((task) => ({
+        const storedEmail = localStorage.getItem("userEmail");
+       const formattedTasks = data
+        .filter((task) => task.email === storedEmail) // Only get tasks belonging to the logged-in user
+        .map((task) => ({
           id: task._id,
           title: task.title,
           description: task.description,
@@ -36,7 +33,6 @@ export default function App() {
           important: task.important || false,
           dueDate: task.dueDate || currentDate,
         }));
-
         setTasks(formattedTasks);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -55,14 +51,20 @@ export default function App() {
 
   useEffect(() => {
     tasks.forEach((task) => {
-      const currentDate = new Date().toISOString().split('T')[0]; // This gives the format "YYYY-MM-DD"
-      console.log("na..:", formatDate(task.dueDate), formatDate(currentDate));
-      if (formatDate(task.dueDate) ===formatDate(currentDate)&& !alertedTasks.has(task.id)) {
-        alert(task.title);
+      const currentDate = new Date().toISOString().split('T')[0]; 
+      console.log(currentDate,task.dueDate)
+     
+      if ((task.dueDate) ===(currentDate)&& !alertedTasks.has(task.id)) {
+        const storedEmail = localStorage.getItem("userEmail");
+        console.log(storedEmail)
+        if(storedEmail!=null) {
+          alert(`Complete the task "${task.title}"`);
         setAlertedTasks((prev) => new Set([...prev, task.id])); // ✅ Correct state update
+        }
       }
     });
   }, [tasks]); // Runs whenever tasks update
+
 
   const filteredTasks =
     tasks.length > 0
@@ -101,7 +103,10 @@ export default function App() {
       important: false,
       dueDate: time,
     };
-    addTaskToDB(newTask.id, title, description, time);
+    const storedEmail = localStorage.getItem("userEmail");
+    console.log("Due date",time)
+
+    addTaskToDB(newTask.id, title, description, time,storedEmail);
     setTasks((prev) => [...prev, newTask]);
   };
   const editTask = (id, newTitle, newDescription, time) => {
@@ -113,12 +118,11 @@ export default function App() {
   const filterTasks = (type) => {
     setFilterType(type);
   };
-
   return (
 <div className="min-h-screen bg-gray-900">
 <Routes>
         <Route path='/' element={<Navigate to="/login" />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login'element={<Login/>} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/home' element={<Home  filterTasks={filterTasks}
       filterType={filterType}
@@ -142,5 +146,6 @@ export default function App() {
       </Routes>
 
     </div>
+    
   );
 }

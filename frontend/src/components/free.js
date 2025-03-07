@@ -1,9 +1,9 @@
-export const addTaskToDB = async (id, title, description, time) => {
+export const addTaskToDB = async (id, title, description, dueDate,email) => {
     try {
       const response = await fetch("http://localhost:3016/addTask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, title, description, time }),
+        body: JSON.stringify({ id, title, description, dueDate,email }),
       });
       const data = await response.json();
       console.log("✅ Task added:", data);
@@ -27,9 +27,9 @@ export const addTaskToDB = async (id, title, description, time) => {
     }
   };
 
-  export  const editTaskInDB = async (id, title, description, time) => {
+  export  const editTaskInDB = async (id, title, description, dueDate) => {
     try {
-      const updatedTask = { title, description, time };
+      const updatedTask = { title, description, dueDate };
       console.log("🔄 Sending update request:", updatedTask);
       const response = await fetch(`http://localhost:3016/editTask/${id}`, {
         method: "PUT",

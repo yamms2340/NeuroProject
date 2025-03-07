@@ -2,11 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../utils";
-
-
-
-
-
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
@@ -23,6 +18,9 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = loginInfo;
+    console.log("eamil..i found",email);
+    localStorage.setItem("userEmail", email); // Store email in local storage
+
 
     if (!email || !password) {
       return handleError("Email and password are required");
