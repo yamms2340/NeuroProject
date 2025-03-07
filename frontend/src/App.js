@@ -3,12 +3,13 @@ import Sidebar from "./Sidebar";
 import TaskList from "./components/TaskList";
 import AddTaskModal from "./components/AddTaskModal";
 import { Navigate, Route, Routes } from 'react-router-dom';
-
+import Calender from "./pages/Calender"
 import { addTaskToDB,deleteTaskFromDB,editTaskInDB } from "./components/free";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 const API_URL = "http://localhost:3016/tasks"; 
+
 export default function App() {
   const [tasks, setTasks] = useState([]); 
   const [filterType, setFilterType] = useState("all");
@@ -16,6 +17,10 @@ export default function App() {
   const [alertedTasks, setAlertedTasks] = useState(new Set()); 
   const [isloggedin,setisloggedin]=useState(false)
   const [isSignUp,setIsSignUp]=useState(false)
+  const [events, setEvents] = useState(() => 
+    JSON.parse(localStorage.getItem("events")) || {}
+  );
+  
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -56,6 +61,24 @@ export default function App() {
 
   useEffect(() => {
     tasks.forEach((task) => {
+
+      const { dueDate, title } = task;
+
+      if (!dueDate) return;
+      const storedEvents = JSON.parse(localStorage.getItem("events")) || {
+        "2025-03-21": ["Conference call", "Dinner with family"],
+      };
+    
+  
+      if (!storedEvents[dueDate]) {
+        storedEvents[dueDate] = []; // Initialize if date doesn't exist
+      }
+  
+      if (!storedEvents[dueDate].includes(title)) {
+        storedEvents[dueDate].push(title); // Add task title if not already there
+      }
+      localStorage.setItem("events", JSON.stringify(storedEvents));
+      console.log("in app",storedEvents)
       const currentDate = new Date().toISOString().split('T')[0]; 
       console.log(currentDate,task.dueDate)
      
@@ -67,6 +90,7 @@ export default function App() {
         setAlertedTasks((prev) => new Set([...prev, task.id])); // ✅ Correct state update
         }
       }
+
     });
   }, [tasks]); // Runs whenever tasks update
 
@@ -147,6 +171,8 @@ export default function App() {
         <Route path='/' element={<Navigate to="/login" />} />
         <Route path='/login'element={<Login/>} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/calender' element={<Calender />} />
+
         <Route path='/home' element={<Home  filterTasks={filterTasks}
       filterType={filterType}
       tasks={tasks}

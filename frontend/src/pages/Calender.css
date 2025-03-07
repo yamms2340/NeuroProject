@@ -1,0 +1,142 @@
+/* Resetting default styles for consistency */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Calendar container to take full screen */
+.calendar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 1000;
+  overflow: auto;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+/* Main content container */
+.calendar-content {
+  width: 80%; /* Adjust width as needed */
+  min-width: 1200px; /* Maximum width to prevent excessive stretching on large screens */
+  height: 80%; /* Adjust height as needed */
+  max-height: 700px; /* Maximum height to prevent excessive stretching */
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  font-size: 1.2em;
+  color: #333;
+  margin-top: 0px;
+  max-height: 10px;
+}
+
+/* Grid container for the calendar */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days of the week */
+  gap: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Day labels */
+.day-label {
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1em;
+  color: #555;
+}
+
+/* Styling for each calendar day */
+.calendar-day {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 1em;
+  color: #444;
+  position: relative;
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+/* Highlight scheduled dates */
+.calendar-day.has-event {
+  background-color: #e6f7ff; /* Light blue for scheduled dates */
+}
+
+/* Highlight selected date */
+.calendar-day.selected {
+  background-color: #1890ff; /* Blue for selected date */
+  color: white;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the event dot */
+.event-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #1890ff; /* Blue dot for events */
+  border-radius: 50%;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+}
+
+/* Hover card styling */
+.hover-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  font-size: 1em;
+  color: #333;
+  width: 200px;
+  text-align: left;
+}
+
+/* Event list styling */
+.event-list {
+  margin-top: 20px;
+  font-size: 1em;
+  color: #333;
+}
+
+/* Style for empty cells */
+.calendar-day.empty {
+  background-color: #f9f9f9;
+  border: none;
+  cursor: default;
+  box-sizing: border-box;
+}

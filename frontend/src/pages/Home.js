@@ -6,6 +6,7 @@ import '../index.css';
 
 const Home = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, deleteTask, toggleStar, editTask, showModal, setShowModal, addTask }) => {
   const navigate = useNavigate();
+  
 
   const handleLogout = async () => {
     try {
@@ -63,6 +64,7 @@ const Home = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, del
       </div>
       {showModal && <AddTaskModal addTask={addTask} closeModal={() => setShowModal(false)} />}
     </div>
+
   );
 };
 
