@@ -18,9 +18,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = loginInfo;
-    console.log("eamil..i found",email);
-    localStorage.setItem("userEmail", email); // Store email in local storage
-
+    
 
     if (!email || !password) {
       return handleError("Email and password are required");
@@ -38,6 +36,9 @@ export default function Login() {
       const result = await response.json();
       console.log(result);
       if (result.message === "success") {
+        localStorage.setItem("userEmail", result.user.email);
+        localStorage.setItem("isParent", result.user.isParent);
+        localStorage.setItem("mailMapped", result.user.mailMapped);
         console.log("Redirecting to home...");
         window.location.href = "/home"; // Redirects to the home page
       } else {

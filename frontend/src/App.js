@@ -23,8 +23,13 @@ export default function App() {
         const data = await response.json();
         const currentDate = new Date().toISOString().split('T')[0]; // This gives the format "YYYY-MM-DD"
         const storedEmail = localStorage.getItem("userEmail");
+        const Mapped = localStorage.getItem("mailMapped");
+        const ispar = localStorage.getItem("isParent");
+        console.log("checking..")
+        console.log(ispar)
+
        const formattedTasks = data
-        .filter((task) => task.email === storedEmail) // Only get tasks belonging to the logged-in user
+        .filter((task) => task.email === Mapped) // Only get tasks belonging to the logged-in user
         .map((task) => ({
           id: task._id,
           title: task.title,
@@ -90,11 +95,23 @@ export default function App() {
     );
   };
   const deleteTask = (id) => {
+    const ispar = localStorage.getItem("isParent");
+    if(ispar=="false"){
+      alert("Only Parents Can Delete..")
+    }else{
     deleteTaskFromDB(id);
     setTasks((prev) => prev.filter((task) => task.id !== id));
+    }
 
   };
   const addTask = (title, description, time) => {
+    const ispar = localStorage.getItem("isParent");
+    console.log("hbjt")
+    console.log(ispar)
+    console.log(typeof(ispar))
+    if(ispar=="false"){
+      alert("Only Parents Can Add..")
+    }else{
     const newTask = { 
       id: String(Date.now()), 
       title, 
@@ -108,12 +125,18 @@ export default function App() {
 
     addTaskToDB(newTask.id, title, description, time,storedEmail);
     setTasks((prev) => [...prev, newTask]);
+  }
   };
   const editTask = (id, newTitle, newDescription, time) => {
+    const ispar = localStorage.getItem("isParent");
+    if(ispar=="false"){
+      alert("Only Parents Can Edit..")
+    }else{
     setTasks((prev) =>
       prev.map((task) => (task.id === id ? { ...task, title: newTitle, description: newDescription, dueDate: time } : task))
     );
     editTaskInDB(id, newTitle, newDescription, time);
+  }
   };
   const filterTasks = (type) => {
     setFilterType(type);
