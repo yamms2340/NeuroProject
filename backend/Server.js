@@ -14,6 +14,7 @@ mongoose.connect("mongodb+srv://yaminireddy2023:LAKvtqcdAilizfhk@neurocluster0.u
 });
 
 const taskSchema = new mongoose.Schema({
+  email:String,
   _id: String,
   title: { type: String, required: true },
   description:{type:String},
@@ -31,10 +32,11 @@ app.get("/tasks", async (req, res) => {
 });
 app.post("/addTask", async (req, res) => {
   try {
-    const { id, title,description } = req.body;
-    const newTask = new Task({ _id: String(id), title,description});
+    const { id, title,description,dueDate,email } = req.body;
+    const newTask = new Task({ email,_id: String(id), title,description,dueDate});
     await newTask.save();
-    res.json({ message: "Task added successfully", task: newTask });
+    console.log("neww",newTask,"time",dueDate)
+    res.json({ message: "Task added successfully", task: newTask,time:dueDate });
   } catch (error) {
     res.status(500).json({ message: "Error adding task", error: error.message });
   }
@@ -42,11 +44,11 @@ app.post("/addTask", async (req, res) => {
 app.put("/editTask/:id", async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, description } = req.body;
+      const { title, description ,dueDate} = req.body;
   
       const updatedTask = await Task.findByIdAndUpdate(
         id,
-        { title, description },
+        { title, description,dueDate },
         { new: true }
       );
   

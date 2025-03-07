@@ -13,6 +13,8 @@ const Home = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, del
       window.location.href = "/signup"; 
       const token = localStorage.getItem("token");
       const email = localStorage.getItem("email"); 
+      localStorage.setItem("userEmail", null); 
+
 
       const response = await fetch("http://localhost:8080/logout", {
         method: "PUT",
@@ -24,7 +26,6 @@ const Home = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, del
 
       if (response.ok) {
         localStorage.removeItem("token"); // Remove token only on success
-        localStorage.removeItem("email");
         navigate("/login"); // Redirect to login page
       } else {
         console.error("Logout failed:", await response.json());
