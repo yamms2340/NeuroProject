@@ -40,7 +40,7 @@ export default function Login() {
         localStorage.setItem("isParent", result.user.isParent);
         localStorage.setItem("mailMapped", result.user.mailMapped);
         console.log("Redirecting to home...");
-        window.location.href = "/home"; // Redirects to the home page
+        window.location.href = "/homepage"; // Redirects to the home page
       } else {
       alert("Invalid credentials..")
       }
