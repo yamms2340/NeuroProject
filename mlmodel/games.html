@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games</title>
+    <link rel="stylesheet" href="games.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <div class="sidebar-icon">🏠</div>
+            <div>Home</div>
+        </div>
+        <div class="sidebar-item">
+            <div class="sidebar-icon">📝</div>
+            <div>Tasks</div>
+        </div>
+        <div class="sidebar-item active">
+            <div class="sidebar-icon">🎮</div>
+            <div>Games</div>
+        </div>
+        <div class="sidebar-item">
+            <div class="sidebar-icon">📅</div>
+            <div>Calendar</div>
+        </div>
+        <div class="sidebar-item">
+            <div class="sidebar-icon">🏆</div>
+            <div>Rewards</div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <h1>Let's Play a Game!</h1>
+        
+        <div class="game-container">
+            <div class="question" id="question">Waiting for question...</div>
+            
+            <div class="options-container" id="options-container">
+                <!-- Options will be filled dynamically -->
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <button class="next-btn" id="next-btn">Get Next Question</button>
+            
+            <div class="waiting-container" id="waiting-container">
+                <div class="waiting-text">Well done! Waiting for next question...</div>
+                <div class="loading-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="celebration" id="celebration"></div>
+    
+    <script src="games.js"></script>
+</body>
+</html>
