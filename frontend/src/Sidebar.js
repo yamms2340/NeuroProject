@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Sidebar({ filterTasks }) {
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const handleJoinClass = () => {
     const roomNumber = prompt("Enter the Room Number:");
     if (roomNumber) {
@@ -16,6 +17,9 @@ export default function Sidebar({ filterTasks }) {
       toast.error("Room number is required to join.");
     }
   };
+=======
+  
+>>>>>>> 7bb114f8cbd3341345b71bf3528b819be1ccff18
 
   return (
     <div className="w-1/4 bg-gray-800 p-5 text-white min-h-screen">
@@ -37,20 +41,11 @@ export default function Sidebar({ filterTasks }) {
       </ul>
 
       {/* Calendar View Button */}
-      <button 
-        onClick={() => navigate("/calender")} 
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-5 w-full"
-      >
-        📅 Calendar View
-      </button>
+      
+      
 
       {/* Join Class Button */}
-      <button 
-        onClick={handleJoinClass} 
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mt-3 w-full"
-      >
-        🎯 Join Class
-      </button>
+    
     </div>
   );
 }
