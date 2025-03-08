@@ -169,7 +169,8 @@ const HomePage = () => {
   const handleJoinClass = () => {
     const roomNumber = prompt("Enter the Room Number:");
     if (roomNumber) {
-      navigate(`/join/${roomNumber}`);
+      window.location.href = 'http://localhost:9000';
+
     }
   };
 
