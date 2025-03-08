@@ -6,20 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Sidebar({ filterTasks }) {
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  const handleJoinClass = () => {
-    const roomNumber = prompt("Enter the Room Number:");
-    if (roomNumber) {
-      toast.success(`Joining room ${roomNumber}...`);
-      console.log(`Navigating to room: ${roomNumber}`);
-      navigate(`/join/${roomNumber}`);
-    } else {
-      toast.error("Room number is required to join.");
-    }
-  };
-=======
-  
->>>>>>> 7bb114f8cbd3341345b71bf3528b819be1ccff18
 
   return (
     <div className="w-1/4 bg-gray-800 p-5 text-white min-h-screen">
