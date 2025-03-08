@@ -8,6 +8,7 @@ import { addTaskToDB,deleteTaskFromDB,editTaskInDB } from "./components/free";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+
 const API_URL = "http://localhost:3016/tasks"; 
 
 export default function App() {
