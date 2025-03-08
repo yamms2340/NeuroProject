@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Sidebar({ filterTasks }) {
   const navigate = useNavigate();
@@ -7,7 +9,11 @@ export default function Sidebar({ filterTasks }) {
   const handleJoinClass = () => {
     const roomNumber = prompt("Enter the Room Number:");
     if (roomNumber) {
+      toast.success(`Joining room ${roomNumber}...`);
+      console.log(`Navigating to room: ${roomNumber}`);
       navigate(`/join/${roomNumber}`);
+    } else {
+      toast.error("Room number is required to join.");
     }
   };
 
