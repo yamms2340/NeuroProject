@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import TaskList from "./components/TaskList";
 import AddTaskModal from "./components/AddTaskModal";
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -8,7 +9,9 @@ import { addTaskToDB,deleteTaskFromDB,editTaskInDB } from "./components/free";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Task";
-import View from "./pages/View"
+import View from "./pages/View";
+import MLGame from "./components/MLGame";
+
 const API_URL = "http://localhost:3016/tasks"; 
 
 export default function App() {
@@ -16,8 +19,9 @@ export default function App() {
   const [filterType, setFilterType] = useState("all");
   const [showModal, setShowModal] = useState(false);
   const [alertedTasks, setAlertedTasks] = useState(new Set()); 
-  const [isloggedin,setisloggedin]=useState(false)
-  const [isSignUp,setIsSignUp]=useState(false)
+  const [isloggedin,setisloggedin]=useState(false);
+  const [isSignUp,setIsSignUp]=useState(false);
+  const navigate = useNavigate(); 
   const [events, setEvents] = useState(() => 
     JSON.parse(localStorage.getItem("events")) || {}
   );
@@ -175,6 +179,7 @@ export default function App() {
         <Route path='/calender' element={<Calender />} />
         <Route path='/homepage' element={<Homepage />} />
         <Route path='/view' element={<View />} />
+        <Route path='/mathGame' element={<MLGame />} />
         <Route path='/task' element={<Home  filterTasks={filterTasks}
       filterType={filterType}
       tasks={tasks}
