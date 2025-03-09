@@ -9,6 +9,7 @@ import { addTaskToDB,deleteTaskFromDB,editTaskInDB } from "./components/free";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Task";
+import View from "./pages/View"
 const API_URL = "http://localhost:3016/tasks"; 
 
 export default function App() {
@@ -174,6 +175,7 @@ export default function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/calender' element={<Calender />} />
         <Route path='/homepage' element={<Homepage />} />
+        <Route path='/view' element={<View />} />
         <Route path='/task' element={<Home  filterTasks={filterTasks}
       filterType={filterType}
       tasks={tasks}

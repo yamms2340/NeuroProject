@@ -5,13 +5,6 @@ const Calender = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const [hoveredDate, setHoveredDate] = useState(null);
-
-  // Example event data (static for demonstration)
-//   const eventData = {
-//     "2025-03-10": ["Meeting with team", "Doctor's appointment"],
-//     "2025-03-15": ["Birthday party", "Project deadline"],
-//     "2025-03-21": ["Conference call", "Dinner with family"],
-//   };
 const eventData = JSON.parse(localStorage.getItem("events")) || {};
 console.log("dataa",eventData)
   const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
