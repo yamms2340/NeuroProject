@@ -1,0 +1,68 @@
+{
+  "user123": [
+    {
+      "iqScore": 10,
+      "accuracy": 1,
+      "timeTaken": "0.96",
+      "consistencyScore": null,
+      "levelProgressionScore": 0,
+      "seenColumn": 0
+    },
+    {
+      "iqScore": 0,
+      "accuracy": 0,
+      "timeTaken": "4.96",
+      "consistencyScore": null,
+      "levelProgressionScore": 0,
+      "seenColumn": 0
+    },
+    {
+      "iqScore": 0,
+      "accuracy": 0,
+      "timeTaken": "0.44",
+      "consistencyScore": null,
+      "levelProgressionScore": 0,
+      "seenColumn": 0
+    },
+    {
+      "iqScore": 0,
+      "accuracy": 0,
+      "timeTaken": "2.03",
+      "consistencyScore": null,
+      "levelProgressionScore": 0,
+      "seenColumn": 0
+    },
+    {
+      "iqScore": 90.5,
+      "accuracy": 1,
+      "timeTaken": "4.82",
+      "consistencyScore": null,
+      "levelProgressionScore": 0,
+      "seenColumn": 0
+    },
+    {
+      "iqScore": 110.5,
+      "accuracy": 1,
+      "timeTaken": "3.30",
+      "consistencyScore": null,
+      "levelProgressionScore": 0,
+      "seenColumn": 0
+    },
+    {
+      "iqScore": 130.5,
+      "accuracy": 1,
+      "timeTaken": "4.78",
+      "consistencyScore": null,
+      "levelProgressionScore": 0,
+      "seenColumn": 0
+    },
+    {
+      "iqScore": 0,
+      "accuracy": 0,
+      "timeTaken": "3.46",
+      "consistencyScore": null,
+      "levelProgressionScore": 0,
+      "seenColumn": 0
+    }
+  ]
+}
