@@ -5,6 +5,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import mlModelServer from "./modelserver.js";  // Import your ML Model Server
+import callModel from "./callmlmodel.js"; // ✅ Correct ES Module Import
+
 
 const app = express();
 const server = createServer(app);
@@ -20,6 +23,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.json());
 app.use(cors());
 app.use(express.static("public"));
+// Mount ML model server
+app.use("/", mlModelServer);
+
 
 mongoose.connect("mongodb+srv://yaminireddy2023:LAKvtqcdAilizfhk@neurocluster0.utmzr.mongodb.net/", {
   useNewUrlParser: true,
