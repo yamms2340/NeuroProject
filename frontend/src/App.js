@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "./Sidebar";
 import TaskList from "./components/TaskList";
 import AddTaskModal from "./components/AddTaskModal";
 import { Navigate, Route, Routes } from 'react-router-dom';
