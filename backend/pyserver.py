@@ -1,19 +1,17 @@
 import matplotlib
 matplotlib.use("Agg")  # Fix Matplotlib GUI issue
 
-import os
+import io
 import pandas as pd
 import matplotlib.pyplot as plt
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-IMAGE_PATH = r"C:\Users\yamin\NeuroProject\frontend\src\pages/graph.png"
-
-def generate_graph(json_data, output_path, selected_params):
-    """Generate and save a graph from JSON data."""
+def generate_graph(json_data, selected_params):
+    """Generate a graph and return it as an in-memory image."""
     try:
         data = pd.DataFrame(json_data)
         data["Date"] = pd.to_datetime(data["Date"])
@@ -21,7 +19,7 @@ def generate_graph(json_data, output_path, selected_params):
 
         data["Combined Value"] = data[selected_params].sum(axis=1)
 
-        # Matplotlib plotting (now using non-GUI backend)
+        # Matplotlib plotting
         plt.figure(figsize=(10, 5))
         plt.plot(data["Date"], data["Combined Value"], marker="s", linestyle="-", color="green", label="Combined Value")
         plt.xlabel("Date")
@@ -31,16 +29,19 @@ def generate_graph(json_data, output_path, selected_params):
         plt.legend()
         plt.grid(True)
 
-        plt.savefig(output_path)
+        # Save the image to a BytesIO object instead of saving it as a file
+        img_io = io.BytesIO()
+        plt.savefig(img_io, format="png")
         plt.close()
+        img_io.seek(0)  # Reset pointer to the start of the stream
 
-        return output_path
+        return img_io  # Return the in-memory image
     except Exception as e:
         return str(e)
 
 @app.route("/generate-graph", methods=["POST"])
 def generate_graph_api():
-    """API endpoint to receive JSON and generate a graph."""
+    """API endpoint to generate a graph and return it as an image response."""
     try:
         data = request.json  
         selected_params = data.get("selected_params", ["Correct"])
@@ -49,10 +50,9 @@ def generate_graph_api():
         if not json_data:
             return jsonify({"error": "No data provided"}), 400
 
-        output_file = generate_graph(json_data, IMAGE_PATH, selected_params)
+        img_io = generate_graph(json_data, selected_params)
         
-        return jsonify({"image_url": output_file})
-
+        return send_file(img_io, mimetype="image/png")  # Directly send the image
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
