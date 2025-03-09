@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import grph from "../pages/graph.png"
+
 const View = () => {
   const [imageSrc, setImageSrc] = useState("");
 
   const jsonData = [
-    { Date: "2024-01-01", Correct: 18},
+    { Date: "2024-01-01", Correct: 1 },
     { Date: "2024-01-02", Correct: 7 },
-    { Date: "2024-01-03", Correct: 3},
+    { Date: "2024-01-03", Correct: 10 },
   ];
 
   const handleGenerateGraph = async () => {
@@ -20,9 +20,9 @@ const View = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        setImageSrc(data.image_url);  // ✅ Update state with the image URL
-        console.log(data)
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+        setImageSrc(imageUrl);  // ✅ Dynamically update image without storing it
         console.log("Graph generated successfully");
       } else {
         console.error("Failed to generate graph");
@@ -40,10 +40,10 @@ const View = () => {
       >
         Generate Graph
       </button>
-      
+
       {imageSrc && (
         <img 
-          src={grph}  // ✅ Display the dynamically fetched image
+          src={imageSrc}  // ✅ Dynamically display fetched image
           alt="Generated Graph"
           className="w-1/2 h-auto rounded-lg shadow-lg"
         />
