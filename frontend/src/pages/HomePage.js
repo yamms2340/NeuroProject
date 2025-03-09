@@ -20,9 +20,6 @@ const HomePage = () => {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-
-  
-
   const toggleContrast = () => {
     setHighContrast(!highContrast);
   };
@@ -173,6 +170,10 @@ const HomePage = () => {
 
     }
   };
+  const handleview = () => {
+    navigate("/view")  
+  };
+
 
 
   return (
@@ -195,6 +196,7 @@ const HomePage = () => {
           </h2>
           <p className="mt-2">Welcome back!</p>
         </div>
+        
         
         {/* Navigation items */}
         <ul className="mt-6">
@@ -221,6 +223,14 @@ const HomePage = () => {
             </li>
           ))}
         </ul>
+        <div className="absolute bottom-20 w-full px-4">
+          <button 
+            onClick={handleview} 
+            className="w-3/5 px-4 py-2 bg-green-400 text-white rounded hover:bg-green-600 mx-auto block text-center ml-0 md-100"
+            >
+            View Progress
+          </button>
+        </div>
         <div className="absolute bottom-4 w-full px-4">
           <button 
             onClick={handleLogout} 
@@ -229,6 +239,8 @@ const HomePage = () => {
             Logout
           </button>
         </div>
+        
+
         <div>
         <button 
         onClick={handleJoinClass} 
