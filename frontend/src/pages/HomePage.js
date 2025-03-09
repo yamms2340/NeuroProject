@@ -199,6 +199,9 @@ const HomePage = () => {
       case "progress":
         navigate("/view");
         break;
+      case 'games':
+        navigate('/mathGame');
+        break;
       default:
         // Stay on dashboard/homepage
         break;
