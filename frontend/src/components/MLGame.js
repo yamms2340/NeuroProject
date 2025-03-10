@@ -15,7 +15,7 @@ function MLGame() {
 
     useEffect(() => {
         // Fetch initial questions
-        axios.get("http://localhost:3016/api/initial-questions")
+        axios.get("http://localhost:5000/api/initial-questions")
             .then(response => setQuestions(response.data))
             .catch(error => console.error("Error fetching questions:", error));
     }, []);
@@ -51,7 +51,7 @@ function MLGame() {
         const iqScore = isCorrect ? calculateAverageIQ(currentQuestion.iq) : 0;
 
         // Fetch last 8 user responses
-        let userData = await axios.get(`http://localhost:3016/api/user-data/${userId}`);
+        let userData = await axios.get(`http://localhost:5000/api/user-data/${userId}`);
         let lastResponses = userData.data || [];
         let lastAccuracies = lastResponses.map(r => r.accuracy);
         let lastTimes = lastResponses.map(r => r.timeTaken);
@@ -62,7 +62,7 @@ function MLGame() {
         let seenColumn = 0;
 
         // Send response to backend
-        axios.post("http://localhost:3016/api/submit-response", {
+        axios.post("http://localhost:5000/api/submit-response", {
             userId,
             iqScore,
             accuracy,
@@ -84,7 +84,7 @@ function MLGame() {
             console.log("Trial games completed. Calling ML model...");
 
             try {
-                const response = await axios.post("http://localhost:3016/api/call-model", { userId });
+                const response = await axios.post("http://localhost:5000/api/call-model", { userId });
                 setModelResponse(response.data);
             } catch (error) {
                 console.error("Error calling ML model:", error);
@@ -104,62 +104,58 @@ function MLGame() {
 
     
     return (
-      <div className="app">
-          {/* Sidebar */}
-          <div className="sidebar">
-              <div className="sidebar-item"><div className="sidebar-icon">🏠</div> Home</div>
-              <div className="sidebar-item"><div className="sidebar-icon">📝</div> Tasks</div>
-              <div className="sidebar-item active"><div className="sidebar-icon">🎮</div> Games</div>
-              <div className="sidebar-item"><div className="sidebar-icon">📅</div> Calendar</div>
-              <div className="sidebar-item"><div className="sidebar-icon">🏆</div> Rewards</div>
-          </div>
+        <div className="MLGame-app">
+        <div className="MLGame-sidebar">
+            <div className="MLGame-sidebar-item"><div className="MLGame-sidebar-icon">🏠</div> Home</div>
+            <div className="MLGame-sidebar-item"><div className="MLGame-sidebar-icon">📝</div> Tasks</div>
+            <div className="MLGame-sidebar-item active"><div className="MLGame-sidebar-icon">🎮</div> Games</div>
+            <div className="MLGame-sidebar-item"><div className="MLGame-sidebar-icon">📅</div> Calendar</div>
+            <div className="MLGame-sidebar-item"><div className="MLGame-sidebar-icon">🏆</div> Rewards</div>
+        </div>
 
-          {/* Main Content */}
-          <div className="main-content">
-              <h1>Let's Play a Game!</h1>
+        <div className="MLGame-main-content">
+            <h1>Let's Play a Game!</h1>
 
-              <div className="game-container">
-                  {questions.length > 0 ? (
-                      <>
-                          <div className="question">{questions[currentIndex].question}</div>
-                          <div className="options-container">
-                              {questions[currentIndex].options.map((option, index) => (
-                                  <button 
-                                      key={index} 
-                                      className={`option ${selectedAnswer !== null 
-                                          ? (String(index) === String(questions[currentIndex].answer) ? "correct" : "incorrect") 
-                                          : ""}`}
-                                      onClick={() => handleAnswer(index)}
-                                      disabled={selectedAnswer !== null} // Disable after selection
-                                  >
-                                      {option}
-                                  </button>
-                              ))}
-                          </div>
-                          <div className="feedback">{feedback}</div>
-                          
-                          {/* Next Question Button (only shown after an answer is selected) */}
-                          {selectedAnswer !== null && (
-                              <button className="next-btn" onClick={nextQuestion}>
-                                  Next Question ➡️
-                              </button>
-                          )}
-                      </>
-                  ) : (
-                      <p>Loading questions...</p>
-                  )}
-              </div>
-
-              {/* Display model response after calling ML */}
-              {modelResponse && (
-                    <div className="model-response">
-                        <h3>Model Prediction:</h3>
-                        <p>{JSON.stringify(modelResponse)}</p>
-                    </div>
+            <div className="MLGame-game-container">
+                {questions.length > 0 ? (
+                    <>
+                        <div className="MLGame-question">{questions[currentIndex].question}</div>
+                        <div className="MLGame-options-container">
+                            {questions[currentIndex].options.map((option, index) => (
+                                <button 
+                                    key={index} 
+                                    className={`MLGame-option ${selectedAnswer !== null 
+                                        ? (String(index) === String(questions[currentIndex].answer) ? "MLGame-correct" : "MLGame-incorrect") 
+                                        : ""}`}
+                                    onClick={() => handleAnswer(index)}
+                                    disabled={selectedAnswer !== null}
+                                >
+                                    {option}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="MLGame-feedback">{feedback}</div>
+                        
+                        {selectedAnswer !== null && (
+                            <button className="MLGame-next-btn" onClick={nextQuestion}>
+                                Next Question ➡️
+                            </button>
+                        )}
+                    </>
+                ) : (
+                    <p>Loading questions...</p>
                 )}
-          </div>
-      </div>
-  );
+            </div>
+
+            {modelResponse && (
+                  <div className="MLGame-model-response">
+                      <h3>Model Prediction:</h3>
+                      <p>{JSON.stringify(modelResponse)}</p>
+                  </div>
+              )}
+        </div>
+    </div>
+);
 }
 
 export default MLGame;
