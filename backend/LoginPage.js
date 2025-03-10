@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
-import updateUserDatasetRoutes from "./updateGameUserDataset.js";
+import updateUserDatasetInsertionRoutes from "./updateGameUserInsertionDataset.js";
+import updateUserDatasetDeletionRoutes from "./updateGameUserDeletionDataset.js";
 import fetchUserRoutes from "./fetchUserDetails.js";
 import User from "./UserModel.js";
 
@@ -23,7 +24,8 @@ const PORT = 8080;
 
 // ✅ Use modularized routes
 app.use("/api", fetchUserRoutes);
-app.use("/api", updateUserDatasetRoutes);
+app.use("/api", updateUserDatasetInsertionRoutes);
+app.use("/api", updateUserDatasetDeletionRoutes);
 
 app.post("/signup", async (req, res) => {
   try {
