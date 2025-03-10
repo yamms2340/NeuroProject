@@ -19,8 +19,8 @@ export default function App() {
   const [filterType, setFilterType] = useState("all");
   const [showModal, setShowModal] = useState(false);
   const [alertedTasks, setAlertedTasks] = useState(new Set()); 
-  const [isloggedin,setisloggedin]=useState(false);
-  const [isSignUp,setIsSignUp]=useState(false);
+  const [isloggedin,setisloggedin]=useState(false)
+  const [isSignUp,setIsSignUp]=useState(false)
   const navigate = useNavigate(); 
   const [events, setEvents] = useState(() => 
     JSON.parse(localStorage.getItem("events")) || {}
