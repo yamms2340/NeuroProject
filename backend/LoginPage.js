@@ -1,40 +1,50 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
-
-const app = express();
-const PORT = 8080;
-
-app.use(express.json());
-app.use(cors());
+import updateUserDatasetRoutes from "./updateGameUserDataset.js";
+import fetchUserRoutes from "./fetchUserDetails.js";
+import User from "./UserModel.js";
 
 mongoose.connect("mongodb+srv://yaminireddy2023:LAKvtqcdAilizfhk@neurocluster0.utmzr.mongodb.net/");
 
-const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  isLogin: { type: Boolean, default: false },
-  isParent: { type: Boolean, default: false },
-  mailMapped: { type: String, default: "" },
-  IQScore: { type: Number, default: 0 },
-  TimeTaken: { type: Number, default: 0 },
-  AttemptedQuestions: { type: Number, default: 0 },
-  CorrectQuestions: { type: Number, default: 0 },
-  dataset: {
-    type: Object,
-    default: {
-      iqScore: 0,
-      accuracy: 0,
-      timeTaken: 0,
-      consistencyScore: 0,
-      levelProgressionScore: 0,
-      seenColumn: 1, // ✅ Initialize seenColumn as 1
-    },
-  },
-});
+const app = express();
 
-const User = mongoose.model("ers", userSchema);
+app.use(express.json());
+
+app.use(cors({
+  origin: "http://localhost:3000",  // Allow only frontend origin
+  credentials: true                 // Allow cookies/auth headers
+}));
+app.use(cookieParser());
+
+const PORT = 8080;
+
+
+// ✅ Use modularized routes
+app.use("/api", fetchUserRoutes);
+app.use("/api", updateUserDatasetRoutes);
+
+
+// app.get("/api/get-user", async (req, res) => {
+//   try {
+//     console.log("Incoming cookies:", req.cookies); // Log all cookies
+
+//     const email = req.cookies.user; 
+//     console.log("Extracted email from cookie:", email); // Log extracted email
+
+//     if (!email) return res.status(404).json({ message: "User not found, no email in cookies" });
+
+//     const user = await User.findOne({ email });
+//     if (!user) return res.status(404).json({ message: "User not found in database" });
+
+//     res.json({ user });
+//   } catch (error) {
+//     res.status(500).json({ message: "Error fetching user", error: error.message });
+//   }
+// });
+
+
 
 app.post("/signup", async (req, res) => {
   try {
@@ -56,15 +66,15 @@ app.post("/signup", async (req, res) => {
       return res.status(400).json({ message: "in" });
     }
 
-    // ✅ Initialize dataset properly
-    const dataset = {
-      iqScore: 0,
-      accuracy: 0,
-      timeTaken: 0,
-      consistencyScore: 0,
-      levelProgressionScore: 0,
-      seenColumn: 1,
-    };
+    // // ✅ Initialize dataset properly
+    // const dataset = {
+    //   iqScore: 0,
+    //   accuracy: 0,
+    //   timeTaken: 0,
+    //   consistencyScore: 0,
+    //   levelProgressionScore: 0,
+    //   seenColumn: 1,
+    // };
 
     const newUser = new User({ 
       name,
@@ -77,7 +87,7 @@ app.post("/signup", async (req, res) => {
       TimeTaken: 0,
       AttemptedQuestions: 0,
       CorrectQuestions: 0,
-      dataset,
+      dataset: [],
     });
     await newUser.save();
 
@@ -94,7 +104,7 @@ app.post("/signup", async (req, res) => {
         TimeTaken: 0,
         AttemptedQuestions: 0,
         CorrectQuestions: 0,
-        dataset,
+        dataset: [],
       });
       await childUser.save();
     }
@@ -121,6 +131,13 @@ app.put("/login", async (req, res) => {
 
     user.isLogin = true;
     await user.save();
+
+     // ✅ Set user email in cookie
+    res.cookie("user", email, {
+      httpOnly: true,   // Prevents client-side access (security)
+      secure: false,    // Change to true if using HTTPS
+      sameSite: "Lax",  // Controls cross-site behavior
+    });
 
     res.json({
       message: "success",
