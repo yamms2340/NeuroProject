@@ -1,39 +1,44 @@
-import Sidebar from "../Sidebar";
+import Sidebar from "../components/Sidebar";
 import TaskList from "../components/TaskList";
 import AddTaskModal from "../components/AddTaskModal";
 import { useNavigate } from "react-router-dom";
-import '../index.css';
+import './Task.css'; // Import the CSS file
 
-const Home = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, deleteTask, toggleStar, editTask, showModal, setShowModal, addTask }) => {
+const Task = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, deleteTask, toggleStar, editTask, showModal, setShowModal, addTask }) => {
   const navigate = useNavigate();
-  
 
-  
   return (
-    <div className="min-h-screen bg-gray-900 flex">
-      <Sidebar filterTasks={filterTasks} filterType={filterType} />
-      <div className="w-3/4 p-5">
-        <div className="flex justify-between items-center">
-          <h1 className="text-white text-2xl font-bold">Task Manager</h1>
-         
-        </div>
+    <div className="Task-container">
+      <Sidebar className="Task-sidebar" filterTasks={filterTasks} filterType={filterType} />
+      <div className="Task-main">
+       
         {tasks.length >= 0 ? (
-          <TaskList
-            tasks={filteredTasks}
-            toggleStatus={toggleStatus}
-            deleteTask={deleteTask}
-            toggleStar={toggleStar}
-            editTask={editTask}
-            openAddTaskModal={() => setShowModal(true)}
-          />
+          <div className="Task-list-container">
+            <TaskList
+              tasks={filteredTasks}
+              toggleStatus={toggleStatus}
+              deleteTask={deleteTask}
+              toggleStar={toggleStar}
+              editTask={editTask}
+              openAddTaskModal={() => setShowModal(true)}
+            />
+          </div>
         ) : (
-          <p className="text-white text-center">No tasks available</p>
+          <p className="Task-no-tasks">No tasks available</p>
         )}
+       
       </div>
-      {showModal && <AddTaskModal addTask={addTask} closeModal={() => setShowModal(false)} />}
+      {showModal && (
+        <div className="Modal-container">
+          <AddTaskModal
+            className="Modal-content"
+            addTask={addTask}
+            closeModal={() => setShowModal(false)}
+          />
+        </div>
+      )}
     </div>
-
   );
 };
 
-export default Home;
+export default Task;
