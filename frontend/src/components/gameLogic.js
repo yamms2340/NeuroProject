@@ -1,6 +1,7 @@
 // gameLogic.js
 import axios from "axios";
 
+
 const calculateStandardDeviation = (data) => {
     if (data.length < 2) return 0;
     let mean = data.reduce((sum, val) => sum + val, 0) / data.length;
@@ -21,7 +22,7 @@ const calculateAverageIQ = (iqRange) => {
     return (low + high) / 2;
 };
 
-export const handleAnswer = async (index, questions, currentIndex, user, setFeedback, setSelectedAnswer, setGameCount) => {
+export const handleAnswer = async (index, questions, currentIndex, user, setFeedback, setSelectedAnswer, setGameCount, startTime) => {
     if (!user || !user.email) {
         console.error("User data is missing.", user);
         return;
@@ -31,7 +32,11 @@ export const handleAnswer = async (index, questions, currentIndex, user, setFeed
     const currentQuestion = questions[currentIndex];
     let isCorrect = String(index) === String(currentQuestion.answer);
     const accuracy = isCorrect ? 1 : 0;
-    const timeTaken = (Math.random() * 5).toFixed(2);
+    if (!startTime) {
+        console.error("⚠️ Start time not found! Defaulting to random time.");
+    }
+    const endTime = Date.now();
+    const timeTaken = startTime ? ((endTime - startTime) / 1000).toFixed(2) : (Math.random() * 5).toFixed(2);
     const iqScore = isCorrect ? calculateAverageIQ(currentQuestion.iq) : 0;
 
     let userData = await axios.get(`http://localhost:5000/api/user-data/${user}`);
@@ -64,10 +69,10 @@ export const handleAnswer = async (index, questions, currentIndex, user, setFeed
     }
 };
 
-export const nextQuestion = async (currentIndex, questions, gameCount, user, setCurrentIndex, setSelectedAnswer, setFeedback, setModelResponse) => {
+export const nextQuestion = async (currentIndex, questions, gameCount, user, setCurrentIndex, setSelectedAnswer, setFeedback, setModelResponse, setStartTime) => {
     if (gameCount === 8) {
         try {
-            const response = await axios.post("http://localhost:5000/api/call-model", { user});
+            const response = await axios.post("http://localhost:5000/api/call-model", { user });
             setModelResponse(response.data);
         } catch (error) {
             console.error("Error calling ML model:", error);
@@ -75,6 +80,7 @@ export const nextQuestion = async (currentIndex, questions, gameCount, user, set
     }
 
     if (currentIndex < questions.length - 1) {
+        setStartTime(Date.now());  // ✅ Store the start time when the question is loaded
         setCurrentIndex(currentIndex + 1);
         setSelectedAnswer(null);
         setFeedback("");
@@ -82,3 +88,4 @@ export const nextQuestion = async (currentIndex, questions, gameCount, user, set
         setFeedback("Quiz completed! 🎊");
     }
 };
+

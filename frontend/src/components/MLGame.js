@@ -10,6 +10,7 @@ function MLGame() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [feedback, setFeedback] = useState("");
+    const [startTime, setStartTime] = useState(null);
     const [gameCount, setGameCount] = useState(0);
     const [modelResponse, setModelResponse] = useState(null);
     const navigate = useNavigate();
