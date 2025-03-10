@@ -78,7 +78,7 @@ function MLGame() {
                                                 console.error("User not set yet, preventing answer submission.");
                                                 return;
                                             }
-                                            handleAnswer(index, questions, currentIndex, user, setFeedback, setSelectedAnswer, setGameCount)}}
+                                            handleAnswer(index, questions, currentIndex, user, setFeedback, setSelectedAnswer, setGameCount, startTime)}}
                                         disabled={selectedAnswer !== null}
                                     >
                                         {option}
@@ -87,7 +87,7 @@ function MLGame() {
                             </div>
                             <div className="MLGame-feedback">{feedback}</div>
                             {selectedAnswer !== null && (
-                                <button className="MLGame-next-btn" onClick={() => nextQuestion(currentIndex, questions, gameCount, user, setCurrentIndex, setSelectedAnswer, setFeedback, setModelResponse)}>
+                                <button className="MLGame-next-btn" onClick={() => nextQuestion(currentIndex, questions, gameCount, user, setCurrentIndex, setSelectedAnswer, setFeedback, setModelResponse, setStartTime)}>
                                     Next Question ➡️
                                 </button>
                             )}
