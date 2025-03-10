@@ -23,8 +23,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.json());
 app.use(cors());
 app.use(express.static("public"));
+
 // Mount ML model server
-app.use("/", mlModelServer);
+app.use("/model", mlModelServer);
 
 
 mongoose.connect("mongodb+srv://yaminireddy2023:LAKvtqcdAilizfhk@neurocluster0.utmzr.mongodb.net/", {
