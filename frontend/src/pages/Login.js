@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../utils";
+import "./LoginPage.css"; // Import the CSS file
+
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
@@ -18,7 +20,6 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = loginInfo;
-    
 
     if (!email || !password) {
       return handleError("Email and password are required");
@@ -26,10 +27,8 @@ export default function Login() {
 
     try {
       const response = await fetch("http://localhost:8080/login", {
-        method: "PUT", // Changed from POST to PUT
-        headers: {
-          "Content-Type": "application/json",
-        },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
@@ -40,48 +39,29 @@ export default function Login() {
         localStorage.setItem("isParent", result.user.isParent);
         localStorage.setItem("mailMapped", result.user.mailMapped);
         console.log("Redirecting to home...");
-        window.location.href = "/homepage"; // Redirects to the home page
+        window.location.href = "/homepage";
       } else {
-      alert("Invalid credentials..")
+        alert("Invalid credentials..");
       }
     } catch (err) {
-        alert("Invalid credentials..")
+      alert("Invalid credentials..");
       console.error("Login error:", err);
       handleError(err.message);
     }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-900 text-white">
-      <form onSubmit={handleLogin} className="bg-gray-800 p-8 rounded-lg w-96 shadow-lg">
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+    <div className="LoginPage-login-container">
+      <form onSubmit={handleLogin} className="LoginPage-login-form">
+        <h2 className="LoginPage-title">Login</h2>
+          <div className="LoginPagebutton-login-container">
+            <input type="email" name="email" placeholder="Email" value={loginInfo.email} onChange={handleChange} required />
+            <input type="password" name="password" placeholder="Password" value={loginInfo.password} onChange={handleChange} required />
+            <button type="submit">Login</button>
+          </div>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={loginInfo.email}
-          onChange={handleChange}
-          className="w-full p-2 mb-3 rounded bg-gray-700 focus:outline-none"
-          required
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={loginInfo.password}
-          onChange={handleChange}
-          className="w-full p-2 mb-3 rounded bg-gray-700 focus:outline-none"
-          required
-        />
-
-        <button type="submit" className="w-full p-2 mt-4 bg-blue-500 rounded hover:bg-blue-600">
-          Login
-        </button>
-
-        <span className="block text-center mt-2">
-          Don't have an account? <Link to="/signup" className="text-blue-400">Sign Up</Link>
+          <span className="LoginPage-switch-auth">
+          Don't have an account? <Link to="/signup">Sign Up</Link>
         </span>
       </form>
     </div>
