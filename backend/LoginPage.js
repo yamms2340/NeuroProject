@@ -25,27 +25,6 @@ const PORT = 8080;
 app.use("/api", fetchUserRoutes);
 app.use("/api", updateUserDatasetRoutes);
 
-
-// app.get("/api/get-user", async (req, res) => {
-//   try {
-//     console.log("Incoming cookies:", req.cookies); // Log all cookies
-
-//     const email = req.cookies.user; 
-//     console.log("Extracted email from cookie:", email); // Log extracted email
-
-//     if (!email) return res.status(404).json({ message: "User not found, no email in cookies" });
-
-//     const user = await User.findOne({ email });
-//     if (!user) return res.status(404).json({ message: "User not found in database" });
-
-//     res.json({ user });
-//   } catch (error) {
-//     res.status(500).json({ message: "Error fetching user", error: error.message });
-//   }
-// });
-
-
-
 app.post("/signup", async (req, res) => {
   try {
     console.log("Entered signup...");
