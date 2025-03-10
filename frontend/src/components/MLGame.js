@@ -13,6 +13,7 @@ function MLGame() {
     const [startTime, setStartTime] = useState(null);
     const [gameCount, setGameCount] = useState(0);
     const [modelResponse, setModelResponse] = useState(null);
+    const [IQScore, setIQScore] = useState(null);
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
@@ -23,8 +24,9 @@ function MLGame() {
             .then(response => {
                 console.log("Fetched user response:", response.data); // Log full response
                 if (response.data.user) {
-                    console.log("User found:", response.data.user);
+                    console.log("User found:", response.data.user, response.data.IQScore);
                     setUser(response.data.user);  
+                    setIQScore(response.data.user.IQScore);
                 } else {
                     console.error("User data missing from response:", response.data);
                 }
@@ -34,10 +36,17 @@ function MLGame() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/initial-questions")
-            .then(response => setQuestions(response.data))
-            .catch(error => console.error("Error fetching questions:", error));
-    }, []);
+        if (IQScore === 0) {
+            axios.get("http://localhost:5000/api/initial-questions")
+                .then(response => setQuestions(response.data))
+                .catch(error => console.error("Error fetching questions:", error));
+        }
+    }, [IQScore]);
+
+    // ✅ If IQScore is NOT 0, show a message instead of the game
+    if (IQScore !== 0) {
+        return <p>Your IQ has already been calculated. No need to play again!</p>;
+    }
 
     if (!questions.length) return <p>Loading questions...</p>;
 
