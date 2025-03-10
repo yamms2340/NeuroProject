@@ -6,6 +6,9 @@ import callModel from "./callmlmodel.js"; // Ensure this file also uses ES modul
 const modelApp = express();
 modelApp.use(cors());
 modelApp.use(express.json());
+const PORT = 5000;
+// //if want to mount on different port, for now it is working on 3016, i.e main servers prt,
+// //if want to change change everywhere, down
 
 // Load questions and game data
 import questions from "./questions.json" assert { type: "json" };
@@ -54,5 +57,11 @@ modelApp.post('/api/call-model', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// Start Server
+modelApp.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
+
 
 export default modelApp; // ✅ Export the Express app correctly
