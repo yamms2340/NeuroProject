@@ -1,43 +1,37 @@
-// updateGameUserDataset.js
 import express from "express";
-import User from "./UserModel.js"; // Import the user model
+import User from "./UserModel.js";
 
 const router = express.Router();
 
+// ✅ Make sure this route matches your frontend request!
 router.post("/update-user-dataset", async (req, res) => {
-  try {
-      const { email, dataset } = req.body;
+    try {
+        const { email, dataset } = req.body;
 
-      if (!email || !dataset) {
-          return res.status(400).json({ error: "Missing email or dataset" });
-      }
+        console.log("Incoming request data:", req.body); // Debugging log
+        
+        const user = await User.findOne({ email });
 
-      // Find user
-      const user = await User.findOne({ email });
-      if (!user) {
-          return res.status(404).json({ error: "User not found" });
-      }
+        if (!user) {
+            return res.status(404).json({ message: "User not found!" });
+        }
 
-      // Ensure dataset is an object with user's email as the key
-      if (!user.dataset) {
-          user.dataset = {};
-      }
+        if (!dataset) {
+            return res.status(400).json({ message: "Dataset is required!" });
+        }
 
-      // Initialize dataset array if it doesn't exist
-      if (!user.dataset[email]) {
-          user.dataset[email] = [];
-      }
+        console.log("Before update:", user.dataset); // Debugging log
 
-      // Append new dataset entry instead of replacing
-      user.dataset[email].push(dataset);
+        user.dataset.push(dataset);
+        await user.save();
 
-      await user.save();
-      res.json({ message: "Dataset updated successfully", dataset: user.dataset[email] });
-  } catch (error) {
-      console.error("Error updating dataset:", error);
-      res.status(500).json({ error: "Error updating dataset" });
-  }
+        console.log("After update:", user.dataset); // Debugging log
+
+        res.json({ message: "✅ Dataset updated successfully!", dataset: user.dataset });
+    } catch (error) {
+        console.error("❌ Error updating dataset:", error);
+        res.status(500).json({ message: "❌ Error updating dataset", error: error.message });
+    }
 });
-
 
 export default router;
