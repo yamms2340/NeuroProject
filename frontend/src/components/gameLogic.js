@@ -1,7 +1,6 @@
 // gameLogic.js
 import axios from "axios";
 
-
 const calculateStandardDeviation = (data) => {
     if (data.length < 2) return 0;
     let mean = data.reduce((sum, val) => sum + val, 0) / data.length;
@@ -47,26 +46,19 @@ export const handleAnswer = async (index, questions, currentIndex, user, setFeed
     
     let consistencyScore = calculateConsistencyScore([...lastAccuracies, accuracy], [...lastTimes, timeTaken]);
 
-    // let updatedDataset = {
-    //     iqScore, // Example scoring
-    //     accuracy,
-    //     timeTaken,
-    //     consistencyScore,  
-    //     levelProgressionScore: 0,  // Placeholder value
-    //     seenColumn: 0, // Increment question counter
-    // };
+    let updatedDataset = {
+        iqScore, // Example scoring
+        accuracy,
+        timeTaken,
+        consistencyScore,  
+        levelProgressionScore: 0,  // Placeholder value
+        seenColumn: 0, // Increment question counter
+    };
 
     try {
         const response = await axios.post("http://localhost:8080/api/update-user-dataset", {
             email: user.email, 
-            dataset:  {
-                iqScore, // Example scoring
-                accuracy,
-                timeTaken,
-                consistencyScore,  
-                levelProgressionScore: 0,  // Placeholder value
-                seenColumn: 0
-            }
+            dataset: updatedDataset
         });
 
         console.log("✅ Dataset sent successfully:", response.data);
