@@ -22,7 +22,7 @@ const calculateAverageIQ = (iqRange) => {
     return (low + high) / 2;
 };
 
-export const handleAnswer = async (index, questions, currentIndex, user, setFeedback, setSelectedAnswer, setGameCount, startTime) => {
+export const handleAnswer = async (index, questions, currentIndex, user, setFeedback, setSelectedAnswer, setGameCount) => {
     if (!user || !user.email) {
         console.error("User data is missing.", user);
         return;
@@ -32,34 +32,44 @@ export const handleAnswer = async (index, questions, currentIndex, user, setFeed
     const currentQuestion = questions[currentIndex];
     let isCorrect = String(index) === String(currentQuestion.answer);
     const accuracy = isCorrect ? 1 : 0;
-    if (!startTime) {
-        console.error("⚠️ Start time not found! Defaulting to random time.");
-    }
+    // if (!startTime) {
+    //     console.error("⚠️ Start time not found! Defaulting to random time.");
+    // }
     const endTime = Date.now();
-    const timeTaken = startTime ? ((endTime - startTime) / 1000).toFixed(2) : (Math.random() * 5).toFixed(2);
+    // const timeTaken = startTime ? ((endTime - startTime) / 1000).toFixed(2) : (Math.random() * 5).toFixed(2);
+    const timeTaken = (Math.random() *2).toFixed(2);
     const iqScore = isCorrect ? calculateAverageIQ(currentQuestion.iq) : 0;
 
-    let userData = await axios.get(`http://localhost:5000/api/user-data/${user}`);
+    let userData = await axios.get(`http://localhost:5000/api/user-data/${user.email}`);
     let lastResponses = userData.data || [];
     let lastAccuracies = lastResponses.map(r => r.accuracy);
     let lastTimes = lastResponses.map(r => r.timeTaken);
     
     let consistencyScore = calculateConsistencyScore([...lastAccuracies, accuracy], [...lastTimes, timeTaken]);
 
-    const updatedDataset = {
-        iqScore, // Example scoring
-        accuracy,
-        timeTaken,
-        consistencyScore,  
-        levelProgressionScore: 0,  // Placeholder value
-        seenColumn: 0, // Increment question counter
-    };
+    // let updatedDataset = {
+    //     iqScore, // Example scoring
+    //     accuracy,
+    //     timeTaken,
+    //     consistencyScore,  
+    //     levelProgressionScore: 0,  // Placeholder value
+    //     seenColumn: 0, // Increment question counter
+    // };
 
     try {
-        await axios.post("http://localhost:8080/api/update-user-dataset", {
+        const response = await axios.post("http://localhost:8080/api/update-user-dataset", {
             email: user.email, 
-            dataset: updatedDataset 
+            dataset:  {
+                iqScore, // Example scoring
+                accuracy,
+                timeTaken,
+                consistencyScore,  
+                levelProgressionScore: 0,  // Placeholder value
+                seenColumn: 0
+            }
         });
+
+        console.log("✅ Dataset sent successfully:", response.data);
 
         setFeedback(isCorrect ? "Correct! 🎉" : "Wrong answer. Try again!");
         setSelectedAnswer(index);
@@ -69,7 +79,7 @@ export const handleAnswer = async (index, questions, currentIndex, user, setFeed
     }
 };
 
-export const nextQuestion = async (currentIndex, questions, gameCount, user, setCurrentIndex, setSelectedAnswer, setFeedback, setModelResponse, setStartTime) => {
+export const nextQuestion = async (currentIndex, questions, gameCount, user, setCurrentIndex, setSelectedAnswer, setFeedback, setModelResponse) => {
     if (gameCount === 8) {
         try {
             const response = await axios.post("http://localhost:5000/api/call-model", { user });
@@ -80,7 +90,7 @@ export const nextQuestion = async (currentIndex, questions, gameCount, user, set
     }
 
     if (currentIndex < questions.length - 1) {
-        setStartTime(Date.now());  // ✅ Store the start time when the question is loaded
+        // setStartTime(Date.now());  // ✅ Store the start time when the question is loaded
         setCurrentIndex(currentIndex + 1);
         setSelectedAnswer(null);
         setFeedback("");
