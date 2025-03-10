@@ -16,7 +16,22 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   isLogin: { type: Boolean, default: false },
   isParent: { type: Boolean, default: false },
-  mailMapped: { type: String, default: "" }
+  mailMapped: { type: String, default: "" },
+  IQScore: { type: Number, default: 0 },
+  TimeTaken: { type: Number, default: 0 },
+  AttemptedQuestions: { type: Number, default: 0 },
+  CorrectQuestions: { type: Number, default: 0 },
+  dataset: {
+    type: Object,
+    default: {
+      iqScore: 0,
+      accuracy: 0,
+      timeTaken: 0,
+      consistencyScore: 0,
+      levelProgressionScore: 0,
+      seenColumn: 1, // ✅ Initialize seenColumn as 1
+    },
+  },
 });
 
 const User = mongoose.model("ers", userSchema);
@@ -41,7 +56,29 @@ app.post("/signup", async (req, res) => {
       return res.status(400).json({ message: "in" });
     }
 
-    const newUser = new User({ name, email, password, isLogin, isParent, mailMapped });
+    // ✅ Initialize dataset properly
+    const dataset = {
+      iqScore: 0,
+      accuracy: 0,
+      timeTaken: 0,
+      consistencyScore: 0,
+      levelProgressionScore: 0,
+      seenColumn: 1,
+    };
+
+    const newUser = new User({ 
+      name,
+      email, 
+      password, 
+      isLogin: false, 
+      isParent, 
+      mailMapped,
+      IQScore: 0,
+      TimeTaken: 0,
+      AttemptedQuestions: 0,
+      CorrectQuestions: 0,
+      dataset,
+    });
     await newUser.save();
 
     let childUser = null;
@@ -53,6 +90,11 @@ app.post("/signup", async (req, res) => {
         isLogin: false,
         isParent: false,
         mailMapped: email,
+        IQScore: 0,
+        TimeTaken: 0,
+        AttemptedQuestions: 0,
+        CorrectQuestions: 0,
+        dataset,
       });
       await childUser.save();
     }
