@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../pages/Game.css";
+import { fetchUserData } from "./UserGameDataUtils"; // Import function
 import { useNavigate } from "react-router-dom";
 import { handleAnswer, nextQuestion } from "./gameLogic";
 
@@ -16,24 +17,12 @@ function MLGame() {
     const [IQScore, setIQScore] = useState(null);
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const [dataset, setDataset] = useState([]);  // Store dataset
 
+    // ✅ Fetch user data when component loads
     useEffect(() => {
-        console.log("Fetching user...");
-        
-        axios.get("http://localhost:8080/api/get-user", { withCredentials: true })
-            .then(response => {
-                console.log("Fetched user response:", response.data); // Log full response
-                if (response.data.user) {
-                    console.log("User found:", response.data.user, response.data.IQScore);
-                    setUser(response.data.user);  
-                    setIQScore(response.data.user.IQScore);
-                } else {
-                    console.error("User data missing from response:", response.data);
-                }
-            })
-            .catch(error => console.error("Error fetching user:", error));
-    }, []);    
-
+        fetchUserData(setUser, setIQScore, setDataset);
+    }, []);
 
     useEffect(() => {
         if (IQScore === 0) {
