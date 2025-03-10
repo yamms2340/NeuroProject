@@ -1,0 +1,95 @@
+/* Task.css */
+
+.Task-container {
+    min-height: 100vh;
+    background-color: #1a1d23;
+    display: flex;
+  }
+  
+  /* For larger screens, set a minimum width */
+  @media (min-width: 1200px) {
+    .Task-container {
+      min-width: 200vh; /* This will apply only to screens wider than 1200px */
+    }
+  }
+  
+  .Task-sidebar {
+    background-color: #2f343a;
+    padding: 20px;
+    width: 250px;
+    box-sizing: border-box;
+  }
+  
+  .Task-main {
+    width: calc(100% - 250px);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  
+  .Task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .Task-title {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .Task-list-container {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Smaller min width */
+    gap: 1px; /* Reduce gap for more tasks */
+    flex-grow: 1;
+  }
+  
+  
+  .Task-no-tasks {
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .Task-add-button {
+    background-color: #3b4047;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .Task-add-button:hover {
+    background-color: #4c5157;
+  }
+  
+  .Modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .Modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  

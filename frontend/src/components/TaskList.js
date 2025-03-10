@@ -1,8 +1,9 @@
 import TaskCard from "./TaskCard";
+import './TaskStyles.css'; // Import the CSS file
 
 export default function TaskList({ tasks, toggleStatus, deleteTask, toggleStar, editTask, openAddTaskModal }) {
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="TaskList-container">
       {/* Render tasks if available */}
       {tasks.length > 0 ? (
         tasks.map((task) => (

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./View.css"; // Import the scoped CSS file
 
 const View = () => {
   const [imageSrc, setImageSrc] = useState("");
@@ -22,7 +23,7 @@ const View = () => {
       if (response.ok) {
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
-        setImageSrc(imageUrl);  // ✅ Dynamically update image without storing it
+        setImageSrc(imageUrl);
         console.log("Graph generated successfully");
       } else {
         console.error("Failed to generate graph");
@@ -33,21 +34,9 @@ const View = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <button
-        onClick={handleGenerateGraph}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 mb-4"
-      >
-        Generate Graph
-      </button>
-
-      {imageSrc && (
-        <img 
-          src={imageSrc}  // ✅ Dynamically display fetched image
-          alt="Generated Graph"
-          className="w-1/2 h-auto rounded-lg shadow-lg"
-        />
-      )}
+    <div className="view-container">
+      <button onClick={handleGenerateGraph}>Generate Graph</button>
+      {imageSrc && <img src={imageSrc} alt="Generated Graph" />}
     </div>
   );
 };
