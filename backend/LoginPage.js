@@ -102,23 +102,28 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
 app.put("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
     if (!user) return res.status(400).json({ message: "User not found!" });
-    if (user.password !== password) return res.status(401).json({ message: "Invalid.. password!" });
+    if (user.password !== password) return res.status(401).json({ message: "Invalid password!" });
 
     user.isLogin = true;
     await user.save();
 
-     // ✅ Set user email in cookie
+    res.clearCookie("user");
+
+    // ✅ Set user email in cookie
     res.cookie("user", email, {
-      httpOnly: true,   // Prevents client-side access (security)
+      httpOnly: false,  // Set to false for now to debug if it's visible in frontend
       secure: false,    // Change to true if using HTTPS
       sameSite: "Lax",  // Controls cross-site behavior
     });
+
+    console.log("✅ Cookie Set:", email); // Debugging
 
     res.json({
       message: "success",
@@ -134,20 +139,29 @@ app.put("/login", async (req, res) => {
   }
 });
 
-app.put("/logout", async (req, res) => {
+
+
+app.post("/logout", async (req, res) => {
   try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "User not found!" });
+      console.log("Incoming cookies:", req.cookies); // Debugging
 
-    user.isLogin = false;
-    await user.save();
+      const email = req.cookies.user; // Extract email from cookie
+      if (!email) return res.status(400).json({ message: "User not logged in!" });
 
-    res.json({ message: "✅ Logout successful!" });
+      const user = await User.findOne({ email });
+      if (!user) return res.status(400).json({ message: "User not found!" });
+
+      user.isLogin = false;
+      await user.save();
+
+      res.clearCookie("user"); // ✅ Remove the stored user email
+      res.json({ message: "✅ Logout successful!" });
   } catch (error) {
-    res.status(500).json({ message: "❌ Error logging out", error: error.message });
+      res.status(500).json({ message: "❌ Error logging out", error: error.message });
   }
 });
+
+
 
 app.get("/check-user", async (req, res) => {
   try {

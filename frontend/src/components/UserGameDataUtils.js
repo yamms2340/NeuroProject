@@ -5,8 +5,7 @@ export const fetchUserData = async (setUser, setIQScore, setDataset) => {
         console.log("Fetching user...");
 
         const response = await axios.get("http://localhost:8080/api/get-user", { withCredentials: true });
-
-        console.log("Fetched user response:", response.data);
+        
 
         if (response.data.user) {
             console.log("User found:", response.data.user, response.data.IQScore);

@@ -24,6 +24,7 @@ function MLGame() {
         fetchUserData(setUser, setIQScore, setDataset);
     }, []);
 
+    console.log("IQ", IQScore)
     useEffect(() => {
         if (IQScore === 0) {
             axios.get("http://localhost:5000/api/initial-questions")
