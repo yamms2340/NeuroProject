@@ -30,8 +30,11 @@ export default function Login() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+        credentials: "include",  // ✅ Ensure cookies are included
       });
 
+      console.log("Response Headers:", response.headers.get("set-cookie")); // Debugging
+      
       const result = await response.json();
       console.log(result);
       if (result.message === "success") {

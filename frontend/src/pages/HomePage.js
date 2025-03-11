@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
@@ -225,10 +226,21 @@ const HomePage = () => {
     setDarkMode(!darkMode);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+  
+    const handleLogout = async (e) => {
+
+      try {
+          const response = await axios.post("http://localhost:8080/logout", {}, { withCredentials: true });
+
+          console.log(response.data.message); // Success message
+          window.location.href = "/login"; // Redirect after logout
+      } catch (error) {
+          console.error("❌ Error logging out:", error);
+      }
+
   };
+
+
   const handleJoinClass = () => {
     const roomNumber = prompt("Enter the Room Number:");
     if (roomNumber) {
