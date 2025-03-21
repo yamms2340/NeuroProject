@@ -10,6 +10,10 @@ const HomePage = () => {
   const [highContrast, setHighContrast] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [fontSizeLevel, setFontSizeLevel] = useState(0); // 0: normal, 1: larger, 2: largest
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+
+
+const [userName, setUserName] = useState("");
 
   const Icon = ({ children, size = 20, color }) => (
     <div
@@ -242,9 +246,15 @@ const HomePage = () => {
 
 
   const handleJoinClass = () => {
-    const roomNumber = prompt("Enter the Room Number:");
-    if (roomNumber) {
-      window.location.href = "http://localhost:9000";
+    setIsJoinModalOpen(true);
+  };
+  
+  const handleJoinSubmit = () => {
+    if (userName) {
+      // Pass the name as a URL parameter
+      window.location.href = `http://localhost:9000?name=${encodeURIComponent(userName)}`;
+      // Close the modal
+      setIsJoinModalOpen(false);
     }
   };
   const cardData = [
@@ -517,6 +527,44 @@ const HomePage = () => {
               </div>
             ))}
           </div>
+{/* Join Class Modal */}
+{isJoinModalOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div className={`bg-${darkMode ? 'gray-800' : 'white'} rounded-lg shadow-xl p-6 w-full max-w-md`}>
+      <h3 className="text-xl font-bold mb-4">Enter Your Name</h3>
+      
+      <div className="mb-6">
+        <label className="block text-sm font-medium mb-1" htmlFor="userName">
+          Your Name
+        </label>
+        <input
+          type="text"
+          id="userName"
+          className={`w-full p-2 border rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+          placeholder="Enter your name"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+      </div>
+      
+      <div className="flex justify-end space-x-3">
+        <button
+          onClick={() => setIsJoinModalOpen(false)}
+          className={`px-4 py-2 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handleJoinSubmit}
+          disabled={!userName}
+          className={`px-4 py-2 rounded-lg bg-indigo-600 text-white ${!userName ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-700'}`}
+        >
+          Join
+        </button>
+      </div>
+    </div>
+  </div>
+)}
         </main>
       </div>
     </div>

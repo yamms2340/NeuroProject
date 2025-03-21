@@ -1,46 +1,383 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Calling App</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>NeuroConnect | Video Calling App</title>
+   
     <script src="/js/socket.io.js" defer></script>
     <script src="/js/main.js" defer></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #6366f1;
+            --text-color: #1f2937;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --accent-color: #8b5cf6;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .caller-list-wrapper {
+            width: 320px;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .caller-list-heading {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .caller-list {
+            list-style: none;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        
+        .caller-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .caller-list li:hover {
+            background-color: #f3f4f6;
+            transform: translateY(-2px);
+        }
+        
+        .caller-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .call-btn {
+            background-color: var(--success-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .call-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .video-call-container {
+            flex-grow: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .username-input {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            right: 2rem;
+            z-index: 10;
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .username-input input {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        
+        .username-input input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+        
+        .username-input button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .username-input button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .video-streams {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            width: 100%;
+            justify-content: center;
+            margin-top: 6rem;
+        }
+        
+        .local-video, .remote-video {
+            width: 45%;
+            min-width: 320px;
+            max-width: 600px;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .local-video video, .remote-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #1f2937;
+        }
+        
+        .local-video::after {
+            content: 'You';
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+        
+        .remote-video::after {
+            content: 'Remote User';
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+        
+        .call-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .call {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .call-disconnect {
+            background-color: var(--danger-color);
+        }
+        
+        .call-disconnect:hover {
+            background-color: #dc2626;
+            transform: scale(1.1);
+        }
+        
+        .d-none {
+            display: none;
+        }
+        
+        .user-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 8px;
+        }
+        
+        .status-online {
+            background-color: var(--success-color);
+        }
+        
+        .status-offline {
+            background-color: #9ca3af;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .caller-list-wrapper {
+                width: 100%;
+                height: 40vh;
+            }
+            
+            .video-streams {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .local-video, .remote-video {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-
     <main class="main-container">
         <aside class="caller-list-wrapper">
-            <h1 class="caller-list-heading h-font">Contacts</h1>
+            <h1 class="caller-list-heading">Contacts</h1>
             <ul id="allusers" class="caller-list">
-                <!-- <li>
-                    <span>Rizwan Khan (You)</span>
-                    <button class="call-btn"><img width="20" src="/images/phone.png" alt=""></button>
-                </li> -->
+                <!-- Dynamic user list will be populated here -->
             </ul>
         </aside>
         <section class="video-call-container">
             <div class="username-input">
-                <input id="username" type="text" placeholder="Enter Username"><button id="create-user">Create</button>
+                <input id="username" type="text" placeholder="Enter your name to join">
+                <button id="create-user">Join Session</button>
             </div>
             <div class="video-streams">
-                
                 <div class="local-video">
                     <video id="localVideo" autoplay muted playsinline></video>
                 </div>
                 <div class="remote-video">
-                    <video id="remoteVideo" autoplay muted playsinline></video>
+                    <video id="remoteVideo" autoplay playsinline></video>
                 </div>
             </div>
-            <div>
+            <div class="call-controls">
                 <button id="end-call-btn" class="call call-disconnect d-none">
-                    <img src="/images/phone-disconnect.png" alt="">
+                    <img src="/images/phone-disconnect.png" alt="End call" width="24">
                 </button>
             </div>
         </section>
     </main>
-    
 
+    <script>
+        // Some additional UI enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if username was passed via URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const nameParam = urlParams.get('name');
+            
+            if (nameParam) {
+                const usernameInput = document.getElementById('username');
+                usernameInput.value = nameParam;
+                // You might want to auto-create the user here
+                // document.getElementById('create-user').click();
+            }
+            
+            // Example of how to create a user avatar element
+            function createUserElement(username, isCurrentUser = false) {
+                const li = document.createElement('li');
+                
+                const userInfo = document.createElement('div');
+                userInfo.className = 'caller-info';
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'user-avatar';
+                avatar.textContent = username.charAt(0).toUpperCase();
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = username + (isCurrentUser ? ' (You)' : '');
+                
+                const statusIndicator = document.createElement('div');
+                statusIndicator.className = 'user-status ' + (isCurrentUser ? 'status-online' : 'status-online');
+                
+                userInfo.appendChild(avatar);
+                userInfo.appendChild(nameSpan);
+                userInfo.appendChild(statusIndicator);
+                
+                li.appendChild(userInfo);
+                
+                if (!isCurrentUser) {
+                    const callButton = document.createElement('button');
+                    callButton.className = 'call-btn';
+                    callButton.innerHTML = '<img width="20" src="/images/phone.png" alt="Call">';
+                    callButton.dataset.username = username;
+                    
+                    li.appendChild(callButton);
+                }
+                
+                return li;
+            }
+            
+            // For demo purposes - you'll replace this with your actual user list logic
+            /*
+            const demoCurrentUser = {name: 'Alex Chen', isCurrentUser: true};
+            const demoUsers = [
+                {name: 'Jordan Smith'},
+                {name: 'Taylor Johnson'},
+                {name: 'Casey Williams'}
+            ];
+            
+            const userList = document.getElementById('allusers');
+            userList.appendChild(createUserElement(demoCurrentUser.name, true));
+            
+            demoUsers.forEach(user => {
+                userList.appendChild(createUserElement(user.name));
+            });
+            */
+        });
+    </script>
 </body>
 </html>
