@@ -3,4 +3,15 @@
     "simple-peer": "^9.11.1",
     "socket.io": "^4.8.1"
   }
+  ,
+  "scripts": {
+    "server": "cd backend && node Server.js",
+    "login": "cd backend && node LoginPage.js",
+    "pyserver": "cd backend && python pyserver.py",
+  "start": "concurrently \"npm run server\" \"npm run login\" \"npm run pyserver\""
+
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
 }
