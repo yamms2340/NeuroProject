@@ -1,285 +1,412 @@
-/* Main Task Card Styling */
+/* Base styling for the entire application */
+body {
+  background-color: #1a1d23;
+  color: #ffffff;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px; /* Reduced from 280px */
+  background-color: #1a1d23;
+  color: #fff;
+  padding: 15px 0; /* Reduced from 20px */
+  border-right: 1px solid #2a2d35;
+}
+
+.main-content {
+  flex: 1;
+  background-color: #1a1d23;
+  padding: 25px; /* Reduced from 40px */
+}
+
+/* Sidebar styling */
+.sidebar-header {
+  padding: 0 15px 15px; /* Reduced from 0 20px 20px */
+  border-bottom: 1px solid #2a2d35;
+}
+
+.platform-name {
+  color: #6c7ee1;
+  font-size: 20px; /* Reduced from 24px */
+  font-weight: 700;
+  margin: 0;
+}
+
+.platform-subtitle {
+  color: #b8c2cc;
+  font-size: 12px; /* Reduced from 14px */
+  margin-top: 3px; /* Reduced from 4px */
+}
+
+.nav-section-title {
+  padding: 15px 15px 8px; /* Reduced from 20px 20px 10px */
+  font-size: 11px; /* Reduced from 12px */
+  font-weight: 600;
+  color: #b8c2cc;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  padding: 8px 15px; /* Reduced from 10px 20px */
+  margin: 3px 0; /* Reduced from 5px 0 */
+  display: flex;
+  align-items: center;
+  color: #b8c2cc;
+  text-decoration: none;
+  font-size: 14px; /* Reduced from 15px */
+  border-left: 3px solid transparent;
+}
+
+.nav-item.active {
+  background-color: rgba(108, 126, 225, 0.1);
+  color: #6c7ee1;
+  border-left-color: #6c7ee1;
+}
+
+.nav-icon {
+  margin-right: 8px; /* Reduced from 10px */
+  width: 18px; /* Reduced from 20px */
+  text-align: center;
+}
+
+/* Dashboard header */
+.dashboard-header {
+  margin-bottom: 20px; /* Reduced from 30px */
+}
+
+.dashboard-title {
+  font-size: 28px; /* Reduced from 32px */
+  font-weight: 700;
+  margin: 0;
+  color: white;
+}
+
+.dashboard-subtitle {
+  font-size: 14px; /* Reduced from 16px */
+  color: #b8c2cc;
+  margin-top: 5px; /* Reduced from 8px */
+}
+
+/* Stats Row - Horizontal layout */
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px; /* Reduced from 20px */
+  margin-bottom: 20px; /* Reduced from 30px */
+}
+
+.stat-card {
+  flex: 1;
+  background-color: #2a2d35;
+  border-radius: 8px; /* Reduced from 10px */
+  padding: 18px; /* Reduced from 24px */
+  text-align: center;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+}
+
+.stat-value {
+  font-size: 30px; /* Reduced from 36px */
+  font-weight: 700;
+  color: #6c7ee1;
+  margin-bottom: 6px; /* Reduced from 10px */
+}
+
+.stat-label {
+  font-size: 13px; /* Reduced from 14px */
+  color: #b8c2cc;
+}
+
+/* Task controls section */
+.task-controls {
+  background-color: #2a2d35;
+  border-radius: 8px; /* Reduced from 10px */
+  padding: 15px; /* Reduced from 20px */
+  margin-bottom: 20px; /* Reduced from 30px */
+}
+
+.controls-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px; /* Reduced from 20px */
+}
+
+.controls-title {
+  font-size: 16px; /* Reduced from 18px */
+  font-weight: 600;
+  color: white;
+}
+
+.add-task-button {
+  background-color: #6c7ee1;
+  color: white;
+  border: none;
+  border-radius: 5px; /* Reduced from 6px */
+  padding: 6px 14px; /* Reduced from 8px 16px */
+  font-size: 13px; /* Reduced from 14px */
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-task-button:hover {
+  background-color: #5a6ad0;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 12px; /* Reduced from 15px */
+}
+
+.filter-select {
+  background-color: #363a44;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 5px; /* Reduced from 6px */
+  padding: 6px 10px; /* Reduced from 8px 12px */
+  font-size: 13px; /* Reduced from 14px */
+}
+
+/* Task Grid */
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Reduced from 280px */
+  gap: 15px; /* Reduced from 20px */
+}
+
+/* Empty state */
+.empty-state {
+  grid-column: 1 / -1;
+  background-color: #2a2d35;
+  border-radius: 8px; /* Reduced from 10px */
+  padding: 30px; /* Reduced from 40px */
+  text-align: center;
+}
+
+.empty-message {
+  color: #b8c2cc;
+  font-size: 14px; /* Reduced from 16px */
+  margin-bottom: 15px; /* Reduced from 20px */
+}
+
+.empty-action {
+  background-color: #6c7ee1;
+  color: white;
+  border: none;
+  border-radius: 5px; /* Reduced from 6px */
+  padding: 8px 16px; /* Reduced from 10px 20px */
+  font-size: 13px; /* Reduced from 14px */
+  cursor: pointer;
+}
+
+/* TaskCard Styling */
 .TaskCard {
-    background: linear-gradient(145deg, #2c3038, #232831);
-    border-radius: 12px;
-    padding: 18px;
-    min-height: 180px;
-    height: auto;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-left: 4px solid #5e6ad2;
-    transition: all 0.3s ease;
-  }
-  
-  .TaskCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  }
-  
-  .TaskCard-header {
-    font-size: 20px;
-    font-weight: 600;
-    color: white;
-    margin-bottom: 12px;
-    text-align: left;
-  }
-  
-  .TaskCard-description {
-    color: #b8c2cc;
-    font-size: 14px;
-    text-align: left;
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-  
-  .TaskCard-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Status Button */
-  .TaskCard-action-button {
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 13px;
-    transition: all 0.2s ease;
-    background-color: #3b4047;
-    color: white;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .TaskCard-action-button:hover {
-    opacity: 0.9;
-    transform: scale(1.05);
-  }
-  
-  .TaskCard-action-button-status {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .TaskCard-action-button-delete {
-    background-color: #f44336;
-    color: white;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-  }
-  
-  .TaskCard-action-button-delete:hover {
-    background-color: #d32f2f;
-    transform: scale(1.1);
-  }
-  
-  .TaskCard-action-button-star {
-    font-size: 22px;
-    color: #ffd700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: none;
-    border: none;
-  }
-  
-  .TaskCard-action-button-star:hover {
-    transform: scale(1.2);
-  }
-  
-  /* Modal Styling */
-  .AddTaskModal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    /* backdrop-filter: blur(5px); */
-  }
-  
-  .AddTaskModal-content {
-    background: linear-gradient(145deg, #323842, #292d36);
-    padding: 28px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    width: 90%;
-    max-width: 500px;
-    animation: modalFade 0.3s ease-in-out;
-  }
-  
-  @keyframes modalFade {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .AddTaskModal-input {
-    width: 100%;
-    padding: 12px 16px;
-    margin-bottom: 18px;
-    border-radius: 8px;
-    background-color: #3b4047;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 15px;
-    transition: all 0.2s ease;
-  }
-  
-  .AddTaskModal-input:focus {
-    outline: none;
-    border-color: #5e6ad2;
-    box-shadow: 0 0 0 2px rgba(94, 106, 210, 0.2);
-  }
-  
-  textarea.AddTaskModal-input {
-    min-height: 100px;
-    resize: vertical;
-  }
-  
-  .AddTaskModal-button {
-    padding: 10px 22px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 15px;
-    transition: all 0.2s ease;
-    border: none;
-  }
-  
-  .AddTaskModal-button-cancel {
-    background-color: #424854;
-    color: white;
-  }
-  
-  .AddTaskModal-button-cancel:hover {
-    background-color: #f44336;
-  }
-  
-  .AddTaskModal-button-add {
-    background-color: #5e6ad2;
-    color: white;
-  }
-  
-  .AddTaskModal-button-add:hover {
-    background-color: #4a56c8;
-    transform: translateY(-2px);
-  }
-  
-  /* Task List Container */
-  .TaskList-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    width: 100%;
-    padding: 10px;
-  }
-  
-  /* Add Task Button */
-  .TaskList-container > div:last-child {
-    background: linear-gradient(145deg, #323842, #292d36);
-    border-radius: 12px;
-    padding: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 180px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px dashed rgba(94, 106, 210, 0.3);
-  }
-  
-  .TaskList-container > div:last-child:hover {
-    background: linear-gradient(145deg, #353a46, #2a2f38);
-    transform: translateY(-5px);
-    border-color: rgba(94, 106, 210, 0.6);
-  }
-  
-  .TaskList-container > div:last-child span {
-    font-size: 18px;
-    font-weight: 600;
-    color: #5e6ad2;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  /* Task Main Container */
-  .Task-container {
-    min-height: 100vh;
-    background: #1a1d23;
-    display: flex;
-  }
-  
-  .Task-sidebar {
-    background: linear-gradient(180deg, #2a303a 0%, #222831 100%);
-    padding: 25px 20px;
-    width: 250px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-    z-index: 10;
-  }
-  
-  .Task-main {
-    width: calc(100% - 250px);
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-  }
-  
-  .Task-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .Task-title {
-    color: white;
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-  }
-  
-  .Task-list-container {
-    margin-top: 20px;
-    flex-grow: 1;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .Task-container {
-      flex-direction: column;
-    }
-    
-    .Task-sidebar {
-      width: 100%;
-      padding: 15px;
-    }
-    
-    .Task-main {
-      width: 100%;
-      padding: 15px;
-    }
-    
-    .TaskList-container {
-      grid-template-columns: 1fr;
-    }
-  }
+  background-color: #2a2d35;
+  border-radius: 8px; /* Reduced from 10px */
+  padding: 15px; /* Reduced from 20px */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.TaskCard.completed-task {
+  opacity: 0.7;
+}
+
+.task-content {
+  flex-grow: 1;
+}
+
+.TaskCard-header {
+  font-size: 16px; /* Reduced from 18px */
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px; /* Reduced from 10px */
+}
+
+.TaskCard-description {
+  color: #b8c2cc;
+  font-size: 13px; /* Reduced from 14px */
+  margin-bottom: 12px; /* Reduced from 15px */
+}
+
+.task-date {
+  display: flex;
+  align-items: center;
+  color: #b8c2cc;
+  font-size: 12px; /* Reduced from 13px */
+  margin-top: 12px; /* Reduced from 15px */
+}
+
+.task-date svg {
+  margin-right: 4px; /* Reduced from 5px */
+}
+
+.TaskCard-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px; /* Reduced from 20px */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 12px; /* Reduced from 15px */
+}
+
+.TaskCard-action-button {
+  background-color: #363a44;
+  color: #b8c2cc;
+  border: none;
+  border-radius: 3px; /* Reduced from 4px */
+  padding: 5px 10px; /* Reduced from 6px 12px */
+  font-size: 11px; /* Reduced from 12px */
+  cursor: pointer;
+}
+
+.TaskCard-action-button-status {
+  background-color: #6c7ee1;
+  color: white;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 6px; /* Reduced from 8px */
+}
+
+.TaskCard-action-button-star {
+  background: none;
+  border: none;
+  color: #FFD700;
+  font-size: 14px; /* Reduced from 16px */
+  cursor: pointer;
+  padding: 0;
+}
+
+.TaskCard-action-button-delete {
+  background: none;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+  padding: 0;
+}
+
+.edit-button {
+  background: none;
+  border: none;
+  color: #b8c2cc;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Edit form styling */
+.task-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Reduced from 15px */
+}
+
+/* Modal Styling - Matching the image */
+.AddTaskModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.AddTaskModal-content {
+  background-color: #2a2d35;
+  border-radius: 8px; /* Reduced from 10px */
+  width: 450px; /* Reduced from 500px */
+  max-width: 90%;
+  padding: 25px; /* Reduced from 30px */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Reduced from 0 5px 15px */
+}
+
+.AddTaskModal-title {
+  font-size: 20px; /* Reduced from 24px */
+  font-weight: 600;
+  color: white;
+  margin-bottom: 15px; /* Reduced from 20px */
+}
+
+.AddTaskModal-input {
+  background-color: #363a44;
+  color: white;
+  border: none;
+  border-radius: 5px; /* Reduced from 6px */
+  padding: 10px; /* Reduced from 12px */
+  font-size: 13px; /* Reduced from 14px */
+  width: 100%;
+  margin-bottom: 12px; /* Reduced from 15px */
+}
+
+textarea.AddTaskModal-input {
+  min-height: 80px; /* Reduced from 100px */
+  resize: vertical;
+}
+
+.AddTaskModal-label {
+  display: block;
+  color: white;
+  font-size: 14px; /* Reduced from 16px */
+  margin-bottom: 6px; /* Reduced from 8px */
+}
+
+.AddTaskModal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px; /* Reduced from 20px */
+}
+
+.AddTaskModal-button {
+  border-radius: 5px; /* Reduced from 6px */
+  padding: 8px 14px; /* Reduced from 10px 16px */
+  font-size: 13px; /* Reduced from 14px */
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+}
+
+.AddTaskModal-button-cancel {
+  background-color: #363a44;
+  color: white;
+}
+
+.AddTaskModal-button-add {
+  background-color: #6c7ee1;
+  color: white;
+}
+
+/* Form styling within task edit */
+.edit-label {
+  color: white;
+  font-size: 13px; /* Reduced from 14px */
+  margin-bottom: 4px; /* Reduced from 5px */
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px; /* Reduced from 10px */
+  margin-top: 8px; /* Reduced from 10px */
+}
