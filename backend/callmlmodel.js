@@ -1,30 +1,22 @@
 import axios from "axios";
-import fs from "fs";
-import gameDataFile from "./userdata.json" assert { type: "json" };
 
-// Function to call Google Colab model
 const callModel = async (userId) => {
-    if (!userId) {
-        throw new Error("User ID is required");
-    }
-
     try {
-        const colabEndpoint = "https://your-colab-notebook-url"; // Replace with actual Colab API URL
-        let gameData = gameDataFile; // Load user data
+        const ngrokUrl = "https://6c9c-34-106-171-138.ngrok-free.app";  // Update this with your latest ngrok URL
 
-        if (!gameData[userId]) {
-            throw new Error("User data not found");
-        }
-
-        // Send user data to Google Colab model
-        const response = await axios.post(colabEndpoint, { userData: gameData[userId] });
-
-        console.log("Model Response:", response.data);
-        return response.data;
+        const response = await axios.post(
+            `${ngrokUrl}/MLGamepredict`,  // ✅ Ensure the endpoint is correct
+            { userId: userId }, // ✅ Pass only userId, not user._id
+            {
+                headers: { "Content-Type": "application/json" },
+                withCredentials: true  // Ensure Flask allows credentials
+            }
+        );
+        return response.data; // ✅ Return the ML model's response
     } catch (error) {
-        console.error("Error calling Google Colab:", error);
-        throw new Error("Failed to call the model");
+        console.error("❌ Error calling ML model", error.message);
+        return { error: "ML model failed" };
     }
 };
 
-export default callModel; // ✅ Use ES module export
+export default callModel;

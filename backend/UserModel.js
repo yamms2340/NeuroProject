@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   CorrectQuestions: { type: Number, default: 0 },
   dataset: {
     type: [Object],
-    deafult: []
+    default: []
     // default: {
     //   iqScore: 0,
     //   accuracy: 0,

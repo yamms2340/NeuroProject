@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import mlModelServer from "./modelserver.js";  // Import your ML Model Server
 import callModel from "./callmlmodel.js"; // ✅ Correct ES Module Import
+import axios from "axios"; // ✅ Ensure axios is available for HTTP requests
 
 
 const app = express();
@@ -21,17 +22,25 @@ const SOCKET_PORT = 9000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
 app.use(express.static("public"));
 
-// Mount ML model server
-app.use("/model", mlModelServer);
 
 
 mongoose.connect("mongodb+srv://yaminireddy2023:LAKvtqcdAilizfhk@neurocluster0.utmzr.mongodb.net/", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+// Mount ML model server
+app.use("/", mlModelServer);
+app.use("/", callModel);
 
 const taskSchema = new mongoose.Schema({
   email: String,
@@ -42,6 +51,8 @@ const taskSchema = new mongoose.Schema({
 });
 
 const Task = mongoose.model("Task", taskSchema);
+
+
 
 // ----------------------- Express Routes -----------------------
 app.get("/", (req, res) => {
@@ -102,6 +113,9 @@ app.delete("/deleteTask/:id", async (req, res) => {
     res.status(500).json({ message: "❌ Error deleting task", error: error.message });
   }
 });
+
+
+
 
 // ----------------------- Socket.IO -----------------------
 const emailToSocketIdMap = new Map();

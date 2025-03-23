@@ -39,10 +39,15 @@ export const handleAnswer = async (index, questions, currentIndex, user, setFeed
     // const timeTaken = (Math.random() *2).toFixed(2);
     const iqScore = isCorrect ? calculateAverageIQ(currentQuestion.iq) : 0;
 
-    let userData = await axios.get(`http://localhost:5000/api/user-data/${user.email}`);
-    let lastResponses = userData.data || [];
-    let lastAccuracies = lastResponses.map(r => r.accuracy);
-    let lastTimes = lastResponses.map(r => r.timeTaken);
+    // Corrected: Pass the user's email to get the right user details from port 8080.
+    let userData = await axios.get(`http://localhost:8080/api/user-data/email`, {
+        params: { email: user.email }
+      });
+      console.log("📥 API Response for User Data:", userData.data);
+
+      let lastResponses = Array.isArray(userData.data.dataset) ? userData.data.dataset : [];
+      let lastAccuracies = lastResponses.length ? lastResponses.map(r => r.accuracy) : [];
+      let lastTimes = lastResponses.length ? lastResponses.map(r => parseFloat(r.timeTaken)) : [];
     
     let consistencyScore = calculateConsistencyScore([...lastAccuracies, accuracy], [...lastTimes, timeTaken]);
 
@@ -72,17 +77,29 @@ export const handleAnswer = async (index, questions, currentIndex, user, setFeed
 };
 
 export const nextQuestion = async (currentIndex, questions, gameCount, user, setCurrentIndex, setSelectedAnswer, setFeedback, setModelResponse, setStartTime) => {
-    if (gameCount === 8) {
+    if (gameCount === 18) {
         try {
-            const response = await axios.post("http://localhost:5000/api/call-model", { user });
+            console.log("📡 Calling ML model for user:", user._id);
+            
+            const response = await axios.post(
+                "http://localhost:3016/api/call-model",  // ✅ Fixed endpoint
+                { userId: user._id?.toString() },  // ✅ Send userId correctly
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true
+                }
+            );
+
+            console.log("✅ ML Model Response:", response.data);
             setModelResponse(response.data);
+
         } catch (error) {
-            console.error("Error calling ML model:", error);
+            console.error("❌ Error calling ML model:", error.response?.data || error.message);
         }
     }
 
     if (currentIndex < questions.length - 1) {
-        setStartTime(Date.now());  // ✅ Store the start time when the question is loaded
+        setStartTime(Date.now());  
         setCurrentIndex(currentIndex + 1);
         setSelectedAnswer(null);
         setFeedback("");
@@ -90,4 +107,3 @@ export const nextQuestion = async (currentIndex, questions, gameCount, user, set
         setFeedback("Quiz completed! 🎊");
     }
 };
-
