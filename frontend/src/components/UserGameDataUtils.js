@@ -1,3 +1,5 @@
+//fetching userdata
+
 import axios from "axios";
 
 export const fetchUserData = async (setUser, setIQScore, setDataset) => {
@@ -5,9 +7,12 @@ export const fetchUserData = async (setUser, setIQScore, setDataset) => {
         console.log("Fetching user...");
 
         const response = await axios.get("http://localhost:8080/api/get-user", { withCredentials: true });
-        
+        if (!response.data.user || !response.data.user._id) {
+            console.error("🚨 No valid user ID in API response:", response.data);
+            return;
+        }
 
-        if (response.data.user) {
+        if (response.data.user && response.data.user !== 0) {
             console.log("User found:", response.data.user, response.data.IQScore);
             setUser(response.data.user);
             setIQScore(response.data.user.IQScore);
@@ -17,8 +22,8 @@ export const fetchUserData = async (setUser, setIQScore, setDataset) => {
             console.log("Dataset before check:", newDataset.length);
 
             // ✅ If dataset size > 20, remove the oldest row
-            if (newDataset.length > 20) {
-                newDataset = newDataset.slice(1); // Remove first entry
+            if (newDataset.length > 30) {
+                newDataset = newDataset.slice(5); // Remove first entry
                 console.log("Dataset after removing oldest row:", newDataset);
 
                 // ✅ Update state and send to backend

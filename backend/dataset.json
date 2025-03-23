@@ -1,0 +1,627 @@
+{
+  "dataset": [
+    {
+      "level": 1,
+      "iq": "0 - 1",
+      "questions": [
+        {
+          "id": "0-1",
+          "iq": "0-10",
+          "question": "If 2 + 3 = 5, then 3 + 5 = ?",
+          "options": ["6", "7", "8", "9"],
+          "answer": "2"
+        },
+        {
+          "id": "0-2",
+          "iq": "11-20",
+          "question": "How many fingers do you have on one hand?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "2"
+        },
+        {
+          "id": "0-3",
+          "iq": "21-30",
+          "question": "What color is the sky on a clear day?",
+          "options": ["Red", "Green", "Blue", "Yellow"],
+          "answer": "2"
+        },
+        {
+          "id": "0-4",
+          "iq": "31-40",
+          "question": "If 🍊 means orange, then 🍊 is what color?",
+          "options": ["Red", "Orange", "Yellow", "Green"],
+          "answer": "1"
+        },
+        {
+          "id": "0-5",
+          "iq": "41-50",
+          "question": "How many sides does a triangle have?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "1"
+        },
+        {
+          "id": "0-6",
+          "iq": "51-60",
+          "question": "Which animal says 'moo'?",
+          "options": ["Dog", "Cat", "Cow", "Duck"],
+          "answer": "2"
+        },
+        {
+          "id": "0-7",
+          "iq": "61-70",
+          "question": "If it's daytime, the sky is light or dark?",
+          "options": ["Light", "Dark"],
+          "answer": "0"
+        },
+        {
+          "id": "0-8",
+          "iq": "71-80",
+          "question": "Which is bigger: an elephant or a mouse?",
+          "options": ["Elephant", "Mouse", "They are the same size"],
+          "answer": "0"
+        },
+        {
+          "id": "0-9",
+          "iq": "81-90",
+          "question": "What comes after the number 1?",
+          "options": ["0", "1", "2", "3"],
+          "answer": "2"
+        },
+        {
+          "id": "0-10",
+          "iq": "91-100",
+          "question": "Which shape is round?",
+          "options": ["Square", "Triangle", "Circle", "Rectangle"],
+          "answer": "2"
+        },
+        {
+          "id": "0-11",
+          "iq": "101-110",
+          "question": "If you're cold, should you put on or take off a jacket?",
+          "options": ["Put on", "Take off"],
+          "answer": "0"
+        },
+        {
+          "id": "0-12",
+          "iq": "111-120",
+          "question": "Which animal has a long neck?",
+          "options": ["Dog", "Cat", "Giraffe", "Fish"],
+          "answer": "2"
+        },
+        {
+          "id": "0-13",
+          "iq": "121-130",
+          "question": "Which fruit is red?",
+          "options": ["Banana", "Apple", "Grape", "Orange"],
+          "answer": "1"
+        },
+        {
+          "id": "0-14",
+          "iq": "131-140",
+          "question": "Which is used for writing?",
+          "options": ["Spoon", "Pencil", "Ball", "Shoe"],
+          "answer": "1"
+        },
+        {
+          "id": "0-15",
+          "iq": "141-150",
+          "question": "How many ears do people usually have?",
+          "options": ["1", "2", "3", "4"],
+          "answer": "1"
+        },
+        {
+          "id": "0-16",
+          "iq": "151-160",
+          "question": "Which is a color of grass?",
+          "options": ["Red", "Blue", "Green", "Purple"],
+          "answer": "2"
+        },
+        {
+          "id": "0-17",
+          "iq": "161-170",
+          "question": "Which animal can fly?",
+          "options": ["Fish", "Bird", "Dog", "Cat"],
+          "answer": "1"
+        },
+        {
+          "id": "0-18",
+          "iq": "171-180",
+          "question": "What do you drink when you're thirsty?",
+          "options": ["Rocks", "Water", "Sand", "Paper"],
+          "answer": "1"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "iq": "2 - 20",
+      "questions": [
+        {
+          "id": "1-1",
+          "iq": "1 - 20",
+          "question": "If 🍎 + 🍎 = 2, then 🍎 + 🍎 + 🍎 = ?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "1"
+        },
+        {
+          "id": "1-2",
+          "iq": "1 - 20",
+          "question": "If 1 + 1 = 2, then 2 + ? = 3",
+          "options": ["1", "3", "4", "5"],
+          "answer": "0"
+        },
+        {
+          "id": "1-3",
+          "iq": "1 - 20",
+          "question": "If ⭐ + ⭐ + ⭐ = 3, then ⭐ + ⭐ = ?",
+          "options": ["1", "2", "3", "4"],
+          "answer": "1"
+        },
+        {
+          "id": "1-4",
+          "iq": "1 - 20",
+          "question": "If 3 = 3 fingers, then 5 = ?",
+          "options": ["3 fingers", "4 fingers", "5 fingers", "6 fingers"],
+          "answer": "2"
+        },
+        {
+          "id": "1-5",
+          "iq": "1 - 20",
+          "question": "If 3 = Three, then 4 = ?",
+          "options": ["Three", "Four", "Five", "Six"],
+          "answer": "1"
+        },
+        {
+          "id": "1-6",
+          "iq": "1 - 20",
+          "question": "If 🌸 + 🌸 = 2, then 🌸 + 🌸 + 🌸 + 🌸 = ?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "2"
+        },
+        {
+          "id": "1-7",
+          "iq": "1 - 20",
+          "question": "If 1 < 2 and 2 < 3, then 2 ? 5",
+          "options": ["2", "5"],
+          "answer": "1"
+        },
+        {
+          "id": "1-8",
+          "iq": "1 - 20",
+          "question": "If 🎈 + 🎈 = 2, then 🎈 + 🎈 + 🎈 + 🎈 + 🎈 = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "2"
+        },
+        {
+          "id": "1-9",
+          "iq": "1 - 20",
+          "question": "If 1 + 1 = 2 and 2 + 1 = 3, then ? + 1 = 3",
+          "options": ["1", "2", "3", "4"],
+          "answer": "1"
+        },
+        {
+          "id": "1-10",
+          "iq": "1 - 20",
+          "question": "If 1st = 1 and 3rd = 3, then in (3, 1, 5, 2), 1 is in the ? position",
+          "options": ["First position", "Second position", "Third position", "Fourth position"],
+          "answer": "1"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "iq": "21 - 40",
+      "questions": [
+        {
+          "id": "2-1",
+          "iq": "21 - 40",
+          "question": "If 0 + 0 = 0, then 1 + 1 = ?",
+          "options": ["1", "2", "3", "4"],
+          "answer": "1"
+        },
+        {
+          "id": "2-2",
+          "iq": "21 - 40",
+          "question": "If 1 + 1 = 2, then 2 + 1 = ?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "1"
+        },
+        {
+          "id": "2-3",
+          "iq": "21 - 40",
+          "question": "If 1 + 1 = 2, then 2 apples + 2 apples = ?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "2"
+        },
+        {
+          "id": "2-4",
+          "iq": "21 - 40",
+          "question": "If 2 + 1 = 3, then 3 + 1 = ?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "2"
+        },
+        {
+          "id": "2-5",
+          "iq": "21 - 40",
+          "question": "If 1 + 1 = 2, then 2 + 2 = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "1"
+        },
+        {
+          "id": "2-6",
+          "iq": "21 - 40",
+          "question": "If 1 + 1 = 2, then 1 banana + 3 bananas = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "1"
+        },
+        {
+          "id": "2-7",
+          "iq": "21 - 40",
+          "question": "If 1 + 2 = 3, then 3 + 2 = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "2"
+        },
+        {
+          "id": "2-8",
+          "iq": "21 - 40",
+          "question": "If 3 + 1 = 4, then 4 + 1 = ?",
+          "options": ["4", "5", "6", "7"],
+          "answer": "1"
+        },
+        {
+          "id": "2-9",
+          "iq": "21 - 40",
+          "question": "If 1 + 1 = 2, then 2 toy cars + 3 toy cars = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "2"
+        },
+        {
+          "id": "2-10",
+          "iq": "21 - 40",
+          "question": "If 1 + 1 = 2, then 2 + 3 = ?",
+          "options": ["4", "5", "6", "7"],
+          "answer": "1"
+        },
+        {
+          "id": "2-11",
+          "iq": "21 - 40",
+          "question": "What comes next: 2, 4, 6, 8, ?",
+          "options": ["1) 9", "2) 10", "3) 12", "4) 14"],
+          "answer": "1"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "iq": "41 - 60",
+      "questions": [
+        {
+          "id": "3-1",
+          "iq": "41 - 60",
+          "question": "If 3 + 2 = 5, then 5 + 2 = ?",
+          "options": ["5", "6", "7", "8"],
+          "answer": "2"
+        },
+        {
+          "id": "3-2",
+          "iq": "41 - 60",
+          "question": "If 3 + 3 = 6, then 4 + 3 = ?",
+          "options": ["6", "7", "8", "9"],
+          "answer": "1"
+        },
+        {
+          "id": "3-3",
+          "iq": "41 - 60",
+          "question": "If 4 - 2 = 2, then 6 stickers - 2 stickers = ?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "2"
+        },
+        {
+          "id": "3-4",
+          "iq": "41 - 60",
+          "question": "If 5 - 3 = 2, then 8 - 3 = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "2"
+        },
+        {
+          "id": "3-5",
+          "iq": "41 - 60",
+          "question": "If 3 + 4 = 7, then 3 + 5 = ?",
+          "options": ["6", "7", "8", "9"],
+          "answer": "2"
+        },
+        {
+          "id": "3-6",
+          "iq": "41 - 60",
+          "question": "If 9 - 4 = 5, then 10 - 4 = ?",
+          "options": ["4", "5", "6", "7"],
+          "answer": "2"
+        },
+        {
+          "id": "3-7",
+          "iq": "41 - 60",
+          "question": "If 5 - 3 = 2, then 7 candies - 3 candies = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "1"
+        },
+        {
+          "id": "3-8",
+          "iq": "41 - 60",
+          "question": "If 6 + 1 = 7, then 6 + 2 = ?",
+          "options": ["7", "8", "9", "10"],
+          "answer": "1"
+        },
+        {
+          "id": "3-9",
+          "iq": "41 - 60",
+          "question": "If 8 - 5 = 3, then 9 - 5 = ?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "2"
+        },
+        {
+          "id": "3-10",
+          "iq": "41 - 60",
+          "question": "If 3 + 4 = 7, then 4 + 4 = ?",
+          "options": ["6", "7", "8", "9"],
+          "answer": "2"
+        },
+        {
+          "id": "3-11",
+          "iq": "41 - 60",
+          "question": "If all dogs have four legs, and Spot is a dog, how many legs does Spot have?",
+          "options": ["1) 2", "2) 3", "3) 4", "4) 5"],
+          "answer": "2"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "iq": "61 - 80",
+      "questions": [
+        {
+          "id": "4-1",
+          "iq": "61 - 80",
+          "question": "If 5 + 3 = 8 and 8 - 2 = 6, then 5 pencils + 3 pencils - 2 pencils = ?",
+          "options": ["5", "6", "7", "8"],
+          "answer": "1"
+        },
+        {
+          "id": "4-2",
+          "iq": "61 - 80",
+          "question": "If 3 + 5 = 8, then 7 + 5 = ?",
+          "options": ["10", "11", "12", "13"],
+          "answer": "2"
+        },
+        {
+          "id": "4-3",
+          "iq": "61 - 80",
+          "question": "If 10 + 5 = 15 and 15 - 3 = 12, then 10 + 5 - 3 = ?",
+          "options": ["10", "11", "12", "13"],
+          "answer": "2"
+        },
+        {
+          "id": "4-4",
+          "iq": "61 - 80",
+          "question": "If 9 + 1 = 10, then 9 + 2 = ?",
+          "options": ["10", "11", "12", "13"],
+          "answer": "1"
+        },
+        {
+          "id": "4-5",
+          "iq": "61 - 80",
+          "question": "If 10 - 6 = 4, then 15 - 6 = ?",
+          "options": ["7", "8", "9", "10"],
+          "answer": "2"
+        },
+        {
+          "id": "4-6",
+          "iq": "61 - 80",
+          "question": "If 10 ÷ 2 = 5, then 8 cookies ÷ 2 friends = ?",
+          "options": ["2", "3", "4", "5"],
+          "answer": "2"
+        },
+        {
+          "id": "4-7",
+          "iq": "61 - 80",
+          "question": "If 6 + 2 = 8 and 8 - 3 = 5, then 6 birds + 2 birds - 3 birds = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "2"
+        },
+        {
+          "id": "4-8",
+          "iq": "61 - 80",
+          "question": "If 10 - 5 = 5, then 12 - 5 = ?",
+          "options": ["5", "6", "7", "8"],
+          "answer": "2"
+        },
+        {
+          "id": "4-9",
+          "iq": "61 - 80",
+          "question": "If 3 + 7 = 10, then 6 + 7 = ?",
+          "options": ["11", "12", "13", "14"],
+          "answer": "2"
+        },
+        {
+          "id": "4-10",
+          "iq": "61 - 80",
+          "question": "If 10 - 5 = 5, then 12 marbles - 5 marbles = ?",
+          "options": ["5", "6", "7", "8"],
+          "answer": "2"
+        },
+        {
+          "id": "4-11",
+          "iq": "61 - 80",
+          "question": "Which is different from the others: apple, banana, carrot, orange",
+          "options": ["1) apple", "2) banana", "3) carrot", "4) orange"],
+          "answer": "2"
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "iq": "81 - 100",
+      "questions": [
+        {
+          "id": "5-1",
+          "iq": "81 - 100",
+          "question": "If 1 bicycle has 2 wheels, then 3 bicycles have ?",
+          "options": ["4", "5", "6", "7"],
+          "answer": "2"
+        },
+        {
+          "id": "5-2",
+          "iq": "81 - 100",
+          "question": "If 1 × 5 = 5, then 2 × 5 = ?",
+          "options": ["8", "9", "10", "11"],
+          "answer": "2"
+        },
+        {
+          "id": "5-3",
+          "iq": "81 - 100",
+          "question": "If 1 cake needs 2 eggs, then 3 cakes need ?",
+          "options": ["5", "6", "7", "8"],
+          "answer": "1"
+        },
+        {
+          "id": "5-4",
+          "iq": "81 - 100",
+          "question": "If $10 - $5 = $5, then $20 - $12 = ?",
+          "options": ["$6", "$7", "$8", "$9"],
+          "answer": "2"
+        },
+        {
+          "id": "5-5",
+          "iq": "81 - 100",
+          "question": "If 1 basket has 4 oranges, then 3 baskets have ?",
+          "options": ["10", "11", "12", "13"],
+          "answer": "2"
+        },
+        {
+          "id": "5-6",
+          "iq": "81 - 100",
+          "question": "If half of 10 is 5, then half of 14 is ?",
+          "options": ["5", "6", "7", "8"],
+          "answer": "2"
+        },
+        {
+          "id": "5-7",
+          "iq": "81 - 100",
+          "question": "If 10 + 8 = 18, then 15 + 8 = ?",
+          "options": ["21", "22", "23", "24"],
+          "answer": "2"
+        },
+        {
+          "id": "5-8",
+          "iq": "81 - 100",
+          "question": "If 1 book costs $5, then 3 books cost ?",
+          "options": ["$12", "$13", "$15", "$18"],
+          "answer": "2"
+        },
+        {
+          "id": "5-9",
+          "iq": "81 - 100",
+          "question": "If 10 - 7 = 3, then 20 - 7 = ?",
+          "options": ["11", "12", "13", "14"],
+          "answer": "2"
+        },
+        {
+          "id": "5-10",
+          "iq": "81 - 100",
+          "question": "If 1 row has 5 chairs, then 4 rows have ?",
+          "options": ["16", "18", "20", "24"],
+          "answer": "2"
+        },
+        {
+          "id": "5-11",
+          "iq": "81 - 100",
+          "question": "Tom has 5 marbles. He gives 2 to his friend. How many marbles does Tom have now?",
+          "options": ["1) 2", "2) 3", "3) 4", "4) 5"],
+          "answer": "1"
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "iq": "101 - 120",
+      "questions": [
+        {
+          "id": "6-1",
+          "iq": "101 - 120",
+          "question": "If 2 × 4 = 8, then 3 × 4 = ?",
+          "options": ["9", "10", "12", "15"],
+          "answer": "2"
+        },
+        {
+          "id": "6-2",
+          "iq": "101 - 120",
+          "question": "If 15 ÷ 5 = 3, then 10 candies ÷ 5 friends = ?",
+          "options": ["1", "2", "3", "5"],
+          "answer": "1"
+        },
+        {
+          "id": "6-3",
+          "iq": "101 - 120",
+          "question": "If 2 × 3 = 6, then 5 × 3 = ?",
+          "options": ["12", "13", "15", "18"],
+          "answer": "2"
+        },
+        {
+          "id": "6-4",
+          "iq": "101 - 120",
+          "question": "If 1 child has 2 balloons, then 6 children have ?",
+          "options": ["8", "10", "12", "14"],
+          "answer": "2"
+        },
+        {
+          "id": "6-5",
+          "iq": "101 - 120",
+          "question": "If 12 ÷ 4 = 3, then 16 ÷ 4 = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "1"
+        },
+        {
+          "id": "6-6",
+          "iq": "101 - 120",
+          "question": "If 15 stickers in groups of 5 makes 3 groups, then 25 stickers in groups of 5 makes ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "2"
+        },
+        {
+          "id": "6-7",
+          "iq": "101 - 120",
+          "question": "If 3 × 4 = 12, then 4 × 4 = ?",
+          "options": ["12", "14", "16", "18"],
+          "answer": "2"
+        },
+        {
+          "id": "6-8",
+          "iq": "101 - 120",
+          "question": "If 1 friend has 6 pencils, then 3 friends have ?",
+          "options": ["15", "18", "21", "24"],
+          "answer": "1"
+        },
+        {
+          "id": "6-9",
+          "iq": "101 - 120",
+          "question": "If 15 ÷ 5 = 3, then 20 ÷ 5 = ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "1"
+        },
+        {
+          "id": "6-10",
+          "iq": "101 - 120",
+          "question": "If 1 box holds 6 cupcakes, then 24 cupcakes need ?",
+          "options": ["3", "4", "5", "6"],
+          "answer": "1"
+        },
+        {
+          "id": "6-11",
+          "iq": "101 - 120",
+          "question": "If today is Monday, what day will it be after 3 days?",
+          "options": ["1) Tuesday", "2) Wednesday", "3) Thursday", "4) Friday"],
+          "answer": "2"
+        }
+      ]
+    }
+  ]
+}

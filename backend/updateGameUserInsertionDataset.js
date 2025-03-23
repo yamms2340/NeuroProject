@@ -6,32 +6,36 @@ const router = express.Router();
 // ✅ Make sure this route matches your frontend request!
 router.post("/update-user-dataset", async (req, res) => {
     try {
-        const { email, dataset } = req.body;
+        console.log("📡 Incoming request to update dataset:", req.body); // Log request body
 
-        console.log("Incoming request data:", req.body); // Debugging log
-        
-        const user = await User.findOne({ email });
+        const { email, newEntry } = req.body;
+
+        if (!email || !newEntry) {
+            console.log("⚠️ Missing email or newEntry in request body.");
+            return res.status(400).json({ message: "Missing email or newEntry" });
+        }
+
+        let user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(404).json({ message: "User not found!" });
+            console.log("⚠️ User not found:", email);
+            return res.status(404).json({ message: "User not found" });
         }
 
-        if (!dataset) {
-            return res.status(400).json({ message: "Dataset is required!" });
+        user.dataset.push(newEntry);
+        if (user.dataset.length > 30) {
+            user.dataset = user.dataset.slice(-30);  
         }
 
-        console.log("Before update:", user.dataset); // Debugging log
-
-        user.dataset.push(dataset);
         await user.save();
+        console.log("✅ Dataset updated successfully!");
 
-        console.log("After update:", user.dataset); // Debugging log
-
-        res.json({ message: "✅ Dataset updated successfully!", dataset: user.dataset });
+        res.status(200).json({ message: "Dataset updated successfully!", dataset: user.dataset });
     } catch (error) {
         console.error("❌ Error updating dataset:", error);
-        res.status(500).json({ message: "❌ Error updating dataset", error: error.message });
+        res.status(500).json({ message: "Server error" });
     }
 });
+
 
 export default router;

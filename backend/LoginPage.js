@@ -5,13 +5,16 @@ import mongoose from "mongoose";
 import updateUserDatasetInsertionRoutes from "./updateGameUserInsertionDataset.js";
 import updateUserDatasetDeletionRoutes from "./updateGameUserDeletionDataset.js";
 import fetchUserRoutes from "./fetchUserDetails.js";
+import getUserIQScoreRoutes from "./getUserIQScore.js";
+import userDataRoutes from "./getuserdataemail.js"; 
 import User from "./UserModel.js";
 
 mongoose.connect("mongodb+srv://yaminireddy2023:LAKvtqcdAilizfhk@neurocluster0.utmzr.mongodb.net/");
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" })); // Increase limit to 5MB
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 app.use(cors({
   origin: "http://localhost:3000",  // Allow only frontend origin
@@ -21,11 +24,12 @@ app.use(cookieParser());
 
 const PORT = 8080;
 
-
 // ✅ Use modularized routes
 app.use("/api", fetchUserRoutes);
 app.use("/api", updateUserDatasetInsertionRoutes);
 app.use("/api", updateUserDatasetDeletionRoutes);
+app.use("/api", getUserIQScoreRoutes);
+app.use("/api", userDataRoutes);
 
 app.post("/signup", async (req, res) => {
   try {
