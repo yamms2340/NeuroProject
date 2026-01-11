@@ -32,7 +32,6 @@ app.use(
 app.use(express.static("public"));
 
 
-
 mongoose.connect("mongodb+srv://yaminireddy2023:LAKvtqcdAilizfhk@neurocluster0.utmzr.mongodb.net/", {
   useNewUrlParser: true,
   useUnifiedTopology: true,

@@ -51,15 +51,7 @@ app.post("/signup", async (req, res) => {
       return res.status(400).json({ message: "in" });
     }
 
-    // // ✅ Initialize dataset properly
-    // const dataset = {
-    //   iqScore: 0,
-    //   accuracy: 0,
-    //   timeTaken: 0,
-    //   consistencyScore: 0,
-    //   levelProgressionScore: 0,
-    //   seenColumn: 1,
-    // };
+ 
 
     const newUser = new User({ 
       name,

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 const HomePage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeNav, setActiveNav] = useState("dashboard");
@@ -165,6 +164,12 @@ const [userName, setUserName] = useState("");
         <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
       </>
     ),
+    themes: createIcon(
+  <>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 6v6l4 2" />
+  </>
+),
     adjust: createIcon(
       <>
         <circle cx="12" cy="12" r="10"></circle>
@@ -190,7 +195,6 @@ const [userName, setUserName] = useState("");
   const handleNavClick = (navId) => {
     setActiveNav(navId);
     if (window.innerWidth < 768) {
-      setSidebarOpen(false);
     }
 
     // Navigation based on ID
@@ -206,6 +210,8 @@ const [userName, setUserName] = useState("");
         break;
       case 'games':
         navigate('/mathGame');
+        break;
+        case 'themes':
         break;
       default:
         // Stay on dashboard/homepage
@@ -315,6 +321,7 @@ const [userName, setUserName] = useState("");
       }`}
     >
       {/* Sidebar */}
+      
       <div
         className={`
         fixed md:relative z-50 h-full w-64 shadow-lg transform transition-transform duration-300 ease-in-out
@@ -346,6 +353,8 @@ const [userName, setUserName] = useState("");
             <ul className="space-y-1 px-3">
               {navItems.map((item) => (
                 <li key={item.id}>
+                
+         
                   <button
                     onClick={() => handleNavClick(item.id)}
                     className={`
@@ -369,6 +378,7 @@ const [userName, setUserName] = useState("");
                     </span>
                     <span>{item.label}</span>
                   </button>
+                  
                 </li>
               ))}
             </ul>
@@ -379,6 +389,7 @@ const [userName, setUserName] = useState("");
               darkMode ? "border-gray-700" : "border-gray-200"
             }`}
           >
+          
             <button
               onClick={handleJoinClass}
               className="flex items-center w-full px-4 py-3 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
