@@ -2,30 +2,44 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
+import "dotenv/config";
+
 import fetchUserRoutes from "./fetchUserDetails.js";
 import updateUserDatasetInsertionRoutes from "./updateGameUserInsertionDataset.js";
 import updateUserDatasetDeletionRoutes from "./updateGameUserDeletionDataset.js";
 import getUserIQScoreRoutes from "./getUserIQScore.js";
 import userDataRoutes from "./getuserdataemail.js";
+
 import User from "./UserModel.js";
 import Otp from "./OtpModel.js";
 import Brevo from "@getbrevo/brevo";
-import "dotenv/config";
 
-// ===============================
-// MongoDB
-// ===============================
-mongoose.connect(process.env.MONGO_URI);
+/* ===============================
+   DATABASE
+================================ */
+if (!process.env.MONGO_URI) {
+  throw new Error("MONGO_URI missing in environment variables");
+}
 
-// ===============================
-// Brevo
-// ===============================
+await mongoose.connect(process.env.MONGO_URI);
+console.log("MongoDB connected");
+
+/* ===============================
+   BREVO
+================================ */
+if (!process.env.BREVO_API_KEY) {
+  throw new Error("BREVO_API_KEY missing");
+}
+
 const brevo = new Brevo.TransactionalEmailsApi();
 brevo.setApiKey(
   Brevo.TransactionalEmailsApiApiKeys.apiKey,
   process.env.BREVO_API_KEY
 );
 
+/* ===============================
+   APP
+================================ */
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,26 +48,26 @@ app.use(cookieParser());
 
 const PORT = 8080;
 
-// ===============================
-// Modular routes
-// ===============================
+/* ===============================
+   ROUTES
+================================ */
 app.use("/api", fetchUserRoutes);
 app.use("/api", updateUserDatasetInsertionRoutes);
 app.use("/api", updateUserDatasetDeletionRoutes);
 app.use("/api", getUserIQScoreRoutes);
 app.use("/api", userDataRoutes);
 
-// ===============================
-// CORE CHILD CREATION (Single Source of Truth)
-// ===============================
-async function createChildForParent(parent, childEmail, childPassword) {
-  const existing = await User.findOne({ email: childEmail });
+/* ===============================
+   CORE CHILD CREATION
+================================ */
+async function createChildForParent(parent, email, password) {
+  const existing = await User.findOne({ email });
   if (existing) throw new Error("Child already exists");
 
   const child = await User.create({
     name: "Child",
-    email: childEmail,
-    password: childPassword,
+    email,
+    password,
     role: "child",
     parent: parent._id,
     isLogin: false,
@@ -70,63 +84,61 @@ async function createChildForParent(parent, childEmail, childPassword) {
   return child;
 }
 
-// ===============================
-// ADD CHILD (after login)
-// ===============================
+/* ===============================
+   ADD CHILD
+================================ */
 app.post("/add-child", async (req, res) => {
   try {
-    const parentEmail = req.cookies.user;
-    if (!parentEmail) return res.status(401).json({ message: "Not logged in" });
+    const email = req.cookies.user;
+    if (!email) return res.status(401).json({ message: "Not logged in" });
 
-    const parent = await User.findOne({ email: parentEmail });
-    if (!parent || parent.role !== "parent") {
+    const parent = await User.findOne({ email });
+    if (!parent || parent.role !== "parent")
       return res.status(403).json({ message: "Only parents can add children" });
-    }
 
     const { childEmail, childPassword } = req.body;
-    if (!childEmail || !childPassword) {
+    if (!childEmail || !childPassword)
       return res.status(400).json({ message: "Child email and password required" });
-    }
 
     const child = await createChildForParent(parent, childEmail, childPassword);
-    res.status(201).json({ message: "Child added", child });
+    res.json({ message: "Child added", child });
 
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
+
+/* ===============================
+   FETCH CHILDREN
+================================ */
 app.get("/my-children", async (req, res) => {
   try {
-    const parentEmail = req.cookies.user;
-    if (!parentEmail) return res.status(401).json({ message: "Not logged in" });
+    const email = req.cookies.user;
+    if (!email) return res.status(401).json({ message: "Not logged in" });
 
-    const parent = await User.findOne({ email: parentEmail }).populate("children");
-    if (!parent || parent.role !== "parent") {
+    const parent = await User.findOne({ email }).populate("children");
+    if (!parent || parent.role !== "parent")
       return res.status(403).json({ message: "Only parents allowed" });
-    }
 
     res.json({ children: parent.children });
-  } catch (err) {
+  } catch {
     res.status(500).json({ message: "Failed to fetch children" });
   }
 });
 
-// ===============================
-// SIGNUP (Parent + optional first child)
-// ===============================
+/* ===============================
+   SIGNUP
+================================ */
 app.post("/signup", async (req, res) => {
   try {
-    const { name, email, password, isParent, childEmail, childPassword } = req.body;
+    const { name, email, password, isParent } = req.body;
+    if (!isParent) return res.status(400).json({ message: "Only parents allowed" });
 
-    if (!isParent) {
-      return res.status(400).json({ message: "Only parents can sign up" });
-    }
+    const otp = await Otp.findOne({ email });
+    if (otp) return res.status(400).json({ message: "Verify email first" });
 
-    const otpRecord = await Otp.findOne({ email });
-    if (otpRecord) return res.status(400).json({ message: "Verify email first" });
-
-    const existing = await User.findOne({ email });
-    if (existing) return res.status(400).json({ message: "Parent already exists" });
+    const exists = await User.findOne({ email });
+    if (exists) return res.status(400).json({ message: "Account already exists" });
 
     const parent = await User.create({
       name,
@@ -134,7 +146,7 @@ app.post("/signup", async (req, res) => {
       password,
       role: "parent",
       children: [],
-      isLogin: false,
+      isLogin: true,
       IQScore: 0,
       TimeTaken: 0,
       AttemptedQuestions: 0,
@@ -142,36 +154,30 @@ app.post("/signup", async (req, res) => {
       dataset: []
     });
 
-    let child = null;
-    if (childEmail && childPassword) {
-      child = await createChildForParent(parent, childEmail, childPassword);
-    }
+    res.cookie("user", email, { httpOnly: false, sameSite: "Lax" });
 
-    res.status(201).json({ message: "Signup successful", parent, child });
-
+    res.json({ message: "Signup successful", parent });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// ===============================
-// SEND OTP
-// ===============================
+/* ===============================
+   SEND OTP
+================================ */
 app.post("/send-parent-otp", async (req, res) => {
   try {
     const { email } = req.body;
-    if (!email) return res.status(400).json({ message: "Email required" });
-
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     await Otp.deleteMany({ email });
-    await Otp.create({ email, otp, expiresAt: new Date(Date.now() + 10 * 60 * 1000) });
+    await Otp.create({ email, otp, expiresAt: new Date(Date.now() + 600000) });
 
     await brevo.sendTransacEmail({
       sender: { email: "yaminireddy2023@gmail.com", name: "NeuroProject" },
       to: [{ email }],
-      subject: "Parent Email Verification OTP",
-      htmlContent: `<h2>Your OTP: ${otp}</h2><p>Valid for 10 minutes</p>`
+      subject: "Parent OTP",
+      htmlContent: `<h2>${otp}</h2><p>Valid for 10 minutes</p>`
     });
 
     res.json({ message: "OTP sent" });
@@ -180,9 +186,9 @@ app.post("/send-parent-otp", async (req, res) => {
   }
 });
 
-// ===============================
-// VERIFY OTP
-// ===============================
+/* ===============================
+   VERIFY OTP
+================================ */
 app.post("/verify-parent-otp", async (req, res) => {
   const { email, otp } = req.body;
   const record = await Otp.findOne({ email, otp });
@@ -194,29 +200,26 @@ app.post("/verify-parent-otp", async (req, res) => {
   res.json({ message: "verified" });
 });
 
-// ===============================
-// LOGIN
-// ===============================
+/* ===============================
+   LOGIN
+================================ */
 app.put("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email }).populate("parent children");
+  const user = await User.findOne({ email }).populate("children");
 
   if (!user) return res.status(400).json({ message: "User not found" });
-  if (user.password !== password) return res.status(401).json({ message: "Invalid password" });
+  if (user.password !== password) return res.status(401).json({ message: "Wrong password" });
 
   user.isLogin = true;
   await user.save();
-  res.cookie("user", email, { httpOnly: false, sameSite: "Lax" });
 
-  res.json({
-    message: "success",
-    user: { name: user.name, email: user.email, role: user.role, parent: user.parent, children: user.children }
-  });
+  res.cookie("user", email, { httpOnly: false, sameSite: "Lax" });
+  res.json({ message: "success", user });
 });
 
-// ===============================
-// LOGOUT
-// ===============================
+/* ===============================
+   LOGOUT
+================================ */
 app.post("/logout", async (req, res) => {
   const email = req.cookies.user;
   const user = await User.findOne({ email });
@@ -225,8 +228,8 @@ app.post("/logout", async (req, res) => {
   user.isLogin = false;
   await user.save();
   res.clearCookie("user");
-  res.json({ message: "Logout successful" });
+  res.json({ message: "Logged out" });
 });
 
-// ===============================
+/* =============================== */
 app.listen(PORT, () => console.log(`🚀 Backend running on port ${PORT}`));

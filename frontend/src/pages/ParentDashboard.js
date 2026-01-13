@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ParentDashboard() {
   const [children, setChildren] = useState([]);
@@ -12,6 +13,21 @@ export default function ParentDashboard() {
   padding: "10px",
   color: "white",
   outline: "none"
+};
+const navigate = useNavigate();
+
+const logout = async () => {
+  try {
+    await fetch("http://localhost:8080/logout", {
+      method: "POST",
+      credentials: "include"
+    });
+
+    localStorage.clear();
+    navigate("/login");
+  } catch (err) {
+    alert("Logout failed");
+  }
 };
 
 
@@ -61,6 +77,25 @@ export default function ParentDashboard() {
       maxWidth: "900px",
       margin: "0 auto"
     }}>
+    <button
+  onClick={logout}
+  style={{
+    position: "absolute",
+    top: "20px",
+    right: "20px",
+    padding: "10px 18px",
+    borderRadius: "10px",
+    background: "#ef4444",
+    color: "white",
+    border: "none",
+    fontWeight: "600",
+    cursor: "pointer",
+    boxShadow: "0 0 15px rgba(239,68,68,.6)"
+  }}
+>
+  Logout
+</button>
+
 
       <h1 style={{ fontSize: "32px", marginBottom: "20px" }}>
         Parent Dashboard
