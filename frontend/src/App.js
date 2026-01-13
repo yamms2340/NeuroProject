@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Task";
 import View from "./pages/View";
 import MLGame from "./components/MLGame";
+import ParentDashboard from "./pages/ParentDashboard";
 
 const API_URL = "http://localhost:5174/tasks";
 
@@ -218,6 +219,8 @@ export default function App() {
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/view" element={<View />} />
         <Route path="/mathGame" element={<MLGame />} />
+        <Route path="/parent" element={<ParentDashboard />} />
+
         <Route
           path="/task"
           element={

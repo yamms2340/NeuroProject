@@ -83,3 +83,25 @@
 .signup-switch-auth a:hover {
     text-decoration: underline;
 }
+.otp-input,
+.child-input {
+  background-color: #f1f5f9;
+  color: #020617;
+  border-radius: 6px;
+  padding: 10px;
+  width: 100%;
+  margin-top: 10px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.otp-input::placeholder,
+.child-input::placeholder {
+  color: #64748b;
+}
+
+.otp-input:focus,
+.child-input:focus {
+  box-shadow: 0 0 0 2px #60a5fa;
+}

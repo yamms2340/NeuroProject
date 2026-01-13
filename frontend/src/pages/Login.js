@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../utils";
-import "./LoginPage.css"; // Import the CSS file
+import "./LoginPage.css";
 
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const navigate = useNavigate();
@@ -30,26 +29,31 @@ export default function Login() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-        credentials: "include",  // ✅ Ensure cookies are included
+        credentials: "include"
       });
 
-      console.log("Response Headers:", response.headers.get("set-cookie")); // Debugging
-      
       const result = await response.json();
-      console.log(result);
-      if (result.message === "success") {
-        localStorage.setItem("userEmail", result.user.email);
-        localStorage.setItem("isParent", result.user.isParent);
-        localStorage.setItem("mailMapped", result.user.mailMapped);
-        console.log("Redirecting to home...");
-        window.location.href = "/homepage";
-      } else {
-        alert("Invalid credentials..");
+
+      if (result.message !== "success") {
+        return handleError(result.message || "Invalid credentials");
       }
+
+      const { user } = result;
+
+      localStorage.setItem("userEmail", user.email);
+      localStorage.setItem("role", user.role);
+
+      handleSuccess("Login successful");
+
+      if (user.role === "parent") {
+        navigate("/parent");
+      } else {
+        navigate("/homepage");
+      }
+
     } catch (err) {
-      alert("Invalid credentials..");
       console.error("Login error:", err);
-      handleError(err.message);
+      handleError("Login failed");
     }
   };
 
@@ -57,13 +61,30 @@ export default function Login() {
     <div className="LoginPage-login-container">
       <form onSubmit={handleLogin} className="LoginPage-login-form">
         <h2 className="LoginPage-title">Login</h2>
-          <div className="LoginPagebutton-login-container">
-            <input type="email" name="email" placeholder="Email" value={loginInfo.email} onChange={handleChange} required />
-            <input type="password" name="password" placeholder="Password" value={loginInfo.password} onChange={handleChange} required />
-            <button type="submit">Login</button>
-          </div>
 
-          <span className="LoginPage-switch-auth">
+        <div className="LoginPagebutton-login-container">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={loginInfo.email}
+            onChange={handleChange}
+            required
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={loginInfo.password}
+            onChange={handleChange}
+            required
+          />
+
+          <button type="submit">Login</button>
+        </div>
+
+        <span className="LoginPage-switch-auth">
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </span>
       </form>
