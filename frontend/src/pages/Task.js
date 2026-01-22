@@ -12,15 +12,16 @@ const Task = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, del
       <div className="Task-main">
        
         {tasks.length >= 0 ? (
-          <div className="Task-list-container">
+          <div className="Task-list-container"> 
             <TaskList
-              tasks={filteredTasks}
-              toggleStatus={toggleStatus}
-              deleteTask={deleteTask}
-              toggleStar={toggleStar}
-              editTask={editTask}
-              openAddTaskModal={() => setShowModal(true)}
-            />
+  tasks={tasks}
+  toggleStatus={toggleStatus}
+  deleteTask={deleteTask}
+  toggleStar={toggleStar}
+  editTask={editTask}
+  openAddTaskModal={() => setShowModal(true)}
+/>
+
           </div>
         ) : (
           <p className="Task-no-tasks">No tasks available</p>

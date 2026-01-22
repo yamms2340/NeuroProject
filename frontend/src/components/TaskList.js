@@ -3,13 +3,14 @@ import TaskCard from "./TaskCard";
 import './TaskStyles.css'; 
 
 export default function TaskList({ 
-  tasks, 
+  tasks = [], 
   toggleStatus, 
   deleteTask, 
   toggleStar, 
   editTask, 
   openAddTaskModal 
 }) {
+
   // Add sorting and filtering functionality
   const [sortBy, setSortBy] = useState("date"); // date, priority, status
   const [filterBy, setFilterBy] = useState("all"); // all, completed, active, starred
@@ -131,14 +132,15 @@ export default function TaskList({
       <div className="task-grid">
         {filteredTasks.length > 0 ? (
           filteredTasks.map((task) => (
-            <TaskCard 
-              key={task.id} 
-              task={task} 
-              toggleStatus={handleToggleStatus} 
-              deleteTask={deleteTask} 
-              toggleStar={toggleStar} 
-              editTask={editTask} 
-            />
+            <TaskCard
+  key={task.id}
+  task={task}
+  toggleStatus={toggleStatus}
+  toggleStar={toggleStar}
+  deleteTask={deleteTask}
+  editTask={editTask}
+/>
+
           ))
         ) : (
           <div className="empty-state">

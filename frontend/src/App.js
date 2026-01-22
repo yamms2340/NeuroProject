@@ -1,257 +1,126 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Navigate, Route, Routes } from "react-router-dom";
-import TaskList from "./components/TaskList";
-import AddTaskModal from "./components/AddTaskModal";
-import Calender from "./pages/Calender";
-import Homepage from "./pages/HomePage";
-import { addTaskToDB, deleteTaskFromDB, editTaskInDB } from "./components/free";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Task";
+import Homepage from "./pages/HomePage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import DashboardLayout from "./pages/DashBoardLayout";
+import StudyRooms from "./pages/StudyRooms";
+import StudyRoom from "./pages/StudyRoom";
+import Calender from "./pages/Calender";
 import View from "./pages/View";
 import MLGame from "./components/MLGame";
 import ParentDashboard from "./pages/ParentDashboard";
-import StudyRooms from "./pages/StudyRooms";
-import StudyRoom from "./pages/StudyRoom";
-import DashboardLayout from "./pages/DashBoardLayout";
 
-const API_URL = "http://localhost:5174/tasks";
+const API = "http://localhost:3016";
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
-  const [filterType, setFilterType] = useState("all");
   const [showModal, setShowModal] = useState(false);
-  const [alertedTasks, setAlertedTasks] = useState(new Set());
-  const [isloggedin, setisloggedin] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
-  const navigate = useNavigate();
 
-  // Theme and coin state
-  const [user, setUser] = useState({
-    coins: 100, // Mock; fetch from backend
-    ownedThemes: ["zen"],
-    currentTheme: "zen",
-  });
+  /* ================= FETCH TASKS ================= */
+  const fetchTasks = async () => {
+    const email = localStorage.getItem("userEmail");
+    if (!email) return;
 
-  const [events, setEvents] = useState(() =>
-    JSON.parse(localStorage.getItem("events")) || {}
-  );
+    const res = await fetch(`${API}/getTasks/${email}`);
+    const data = await res.json();
 
- 
+    setTasks(
+      data.map(t => ({
+        id: t.id,
+        title: t.title,
+        description: t.description,
+        dueDate: t.dueDate,
+        completed: t.completed,
+        starred: t.starred,
+      }))
+    );
+  };
 
-  // Fetch tasks and user data
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        const currentDate = new Date().toISOString().split("T")[0];
-        const storedEmail = localStorage.getItem("userEmail");
-        const Mapped = localStorage.getItem("mailMapped");
-        const ispar = localStorage.getItem("isParent");
-
-        const formattedTasks = data
-          .filter((task) => task.email === Mapped)
-          .map((task) => ({
-            id: task._id,
-            title: task.title,
-            description: task.description,
-            status: task.status || "incomplete",
-            important: task.important || false,
-            dueDate: task.dueDate || currentDate,
-          }));
-        setTasks(formattedTasks);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-        setTasks([]);
-      }
-    };
-
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("http://localhost:5174/user", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        if (!response.ok) throw new Error("Failed to fetch user data");
-        const data = await response.json();
-        setUser({
-          coins: data.coins || 100,
-          ownedThemes: data.ownedThemes || ["zen"],
-          currentTheme: data.currentTheme || "zen",
-        });
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
     fetchTasks();
-    fetchUserData();
-
-    const interval = setInterval(fetchTasks, 60000);
-    return () => clearInterval(interval);
   }, []);
 
-  // Handle task alerts and calendar events
-  useEffect(() => {
-    tasks.forEach((task) => {
-      const { dueDate, title } = task;
-      if (!dueDate) return;
+  /* ================= ADD ================= */
+  const addTask = async (title, description, dueDate) => {
+    const email = localStorage.getItem("userEmail");
 
-      const storedEvents = JSON.parse(localStorage.getItem("events")) || {};
-      if (!storedEvents[dueDate]) {
-        storedEvents[dueDate] = [];
-      }
-      if (!storedEvents[dueDate].includes(title)) {
-        storedEvents[dueDate].push(title);
-      }
-      localStorage.setItem("events", JSON.stringify(storedEvents));
-
-      const currentDate = new Date().toISOString().split("T")[0];
-      if (dueDate === currentDate && !alertedTasks.has(task.id)) {
-        const storedEmail = localStorage.getItem("userEmail");
-        if (storedEmail) {
-          alert(`Complete the task "${task.title}"`);
-          setAlertedTasks((prev) => new Set([...prev, task.id]));
-        }
-      }
-    });
-  }, [tasks]);
-
-  // Apply theme
-  const applyTheme = async (themeId) => {
-    setUser((prev) => ({ ...prev, currentTheme: themeId }));
-    try {
-      await fetch("http://localhost:5174/user", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ currentTheme: themeId }),
-      });
-    } catch (error) {
-      console.error("Error updating theme:", error);
-    }
-  };
-
-  const filteredTasks =
-    tasks.length > 0
-      ? filterType === "all"
-        ? tasks
-        : tasks.filter((task) =>
-            filterType === "important" ? task.important : task.status === filterType
-          )
-      : [];
-
-  const toggleStatus = (id) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id
-          ? { ...task, status: task.status === "completed" ? "incomplete" : "completed" }
-          : task
-      )
-    );
-    // Award coins for completing tasks
-    if (tasks.find((task) => task.id === id)?.status === "incomplete") {
-      setUser((prev) => ({ ...prev, coins: prev.coins + 5 }));
-      // TODO: Update backend with new coin count
-    }
-  };
-
-  const toggleStar = (id) => {
-    setTasks((prev) =>
-      prev.map((task) => (task.id === id ? { ...task, important: !task.important } : task))
-    );
-  };
-
-  const deleteTask = (id) => {
-    const ispar = localStorage.getItem("isParent");
-    if (ispar === "false") {
-      alert("Only Parents Can Delete..");
-    } else {
-      deleteTaskFromDB(id);
-      setTasks((prev) => prev.filter((task) => task.id !== id));
-    }
-  };
-
-  const addTask = (title, description, time) => {
-    const ispar = localStorage.getItem("isParent");
-    if (ispar === "false") {
-      alert("Only Parents Can Add..");
-    } else {
-      const newTask = {
-        id: String(Date.now()),
+    const res = await fetch(`${API}/addTask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: crypto.randomUUID(),
         title,
         description,
-        status: "incomplete",
-        important: false,
-        dueDate: time,
-      };
-      const storedEmail = localStorage.getItem("userEmail");
-      addTaskToDB(newTask.id, title, description, time, storedEmail);
-      setTasks((prev) => [...prev, newTask]);
-    }
+        dueDate,
+        email,
+      }),
+    });
+
+    const saved = await res.json();
+    setTasks(prev => [saved, ...prev]);
   };
 
-  const editTask = (id, newTitle, newDescription, time) => {
-    const ispar = localStorage.getItem("isParent");
-    if (ispar === "false") {
-      alert("Only Parents Can Edit..");
-    } else {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === id
-            ? { ...task, title: newTitle, description: newDescription, dueDate: time }
-            : task
-        )
-      );
-      editTaskInDB(id, newTitle, newDescription, time);
-    }
+  /* ================= TOGGLE COMPLETE ================= */
+  const toggleStatus = async (id) => {
+    await fetch(`${API}/toggleTaskStatus/${id}`, { method: "PUT" });
+    fetchTasks();
   };
 
-  const filterTasks = (type) => {
-    setFilterType(type);
+  /* ================= TOGGLE STAR ================= */
+  const toggleStar = async (id) => {
+    await fetch(`${API}/toggleTaskStar/${id}`, { method: "PUT" });
+    fetchTasks();
+  };
+
+  /* ================= EDIT ================= */
+  const editTask = async (id, title, description, dueDate) => {
+    await fetch(`${API}/editTask/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, description, dueDate }),
+    });
+    fetchTasks();
+  };
+
+  /* ================= DELETE ================= */
+  const deleteTask = async (id) => {
+    await fetch(`${API}/deleteTask/${id}`, { method: "DELETE" });
+    setTasks(prev => prev.filter(t => t.id !== id));
   };
 
   return (
-      <Routes>
-  <Route path="/" element={<Navigate to="/login" />} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/signup" element={<Signup />} />
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
 
-  {/* DASHBOARD LAYOUT */}
-  <Route element={<DashboardLayout />}>
-    <Route path="/homepage" element={<Homepage />} />
-    <Route path="/task" element={
-      <Home
-        filterTasks={filterTasks}
-        filterType={filterType}
-        tasks={tasks}
-        filteredTasks={filteredTasks}
-        toggleStatus={toggleStatus}
-        deleteTask={deleteTask}
-        toggleStar={toggleStar}
-        editTask={editTask}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        addTask={addTask}
-      />
-    }/>
-    <Route path="/study-rooms" element={<StudyRooms />} />
-    <Route path="/study-room/:id" element={<StudyRoom />} />
-    <Route path="/calender" element={<Calender />} />
-    <Route path="/view" element={<View />} />
-    <Route path="/mathGame" element={<MLGame />} />
-  </Route>
+      <Route element={<DashboardLayout />}>
+        <Route path="/homepage" element={<Homepage />} />
+        <Route
+          path="/task"
+          element={
+            <Home
+              tasks={tasks}
+              addTask={addTask}
+              toggleStatus={toggleStatus}
+              toggleStar={toggleStar}
+              deleteTask={deleteTask}
+              editTask={editTask}
+              showModal={showModal}
+              setShowModal={setShowModal}
+            />
+          }
+        />
+        <Route path="/study-rooms" element={<StudyRooms />} />
+        <Route path="/study-room/:id" element={<StudyRoom />} />
+        <Route path="/calender" element={<Calender />} />
+        <Route path="/view" element={<View />} />
+        <Route path="/mathGame" element={<MLGame />} />
+      </Route>
 
-  {/* OUTSIDE DASHBOARD */}
-  <Route path="/parent" element={<ParentDashboard />} />
-</Routes>
-
+      <Route path="/parent" element={<ParentDashboard />} />
+    </Routes>
   );
 }
-
-
-
-
-
