@@ -11,6 +11,9 @@ import Home from "./pages/Task";
 import View from "./pages/View";
 import MLGame from "./components/MLGame";
 import ParentDashboard from "./pages/ParentDashboard";
+import StudyRooms from "./pages/StudyRooms";
+import StudyRoom from "./pages/StudyRoom";
+import DashboardLayout from "./pages/DashBoardLayout";
 
 const API_URL = "http://localhost:5174/tasks";
 
@@ -212,38 +215,39 @@ export default function App() {
 
   return (
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/calender" element={<Calender />} />
-        <Route path="/homepage" element={<Homepage />} />
-        <Route path="/view" element={<View />} />
-        <Route path="/mathGame" element={<MLGame />} />
-        <Route path="/parent" element={<ParentDashboard />} />
+  <Route path="/" element={<Navigate to="/login" />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/signup" element={<Signup />} />
 
-        <Route
-          path="/task"
-          element={
-            <Home
-              filterTasks={filterTasks}
-              filterType={filterType}
-              tasks={tasks}
-              filteredTasks={filteredTasks}
-              toggleStatus={toggleStatus}
-              deleteTask={deleteTask}
-              toggleStar={toggleStar}
-              editTask={editTask}
-              showModal={showModal}
-              setShowModal={setShowModal}
-              addTask={addTask}
-              isloggedin={isloggedin}
-              setisloggedin={setisloggedin}
-              isSignUp={isSignUp}
-              setIsSignUp={setIsSignUp}
-            />
-          }
-        />
-      </Routes>
+  {/* DASHBOARD LAYOUT */}
+  <Route element={<DashboardLayout />}>
+    <Route path="/homepage" element={<Homepage />} />
+    <Route path="/task" element={
+      <Home
+        filterTasks={filterTasks}
+        filterType={filterType}
+        tasks={tasks}
+        filteredTasks={filteredTasks}
+        toggleStatus={toggleStatus}
+        deleteTask={deleteTask}
+        toggleStar={toggleStar}
+        editTask={editTask}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        addTask={addTask}
+      />
+    }/>
+    <Route path="/study-rooms" element={<StudyRooms />} />
+    <Route path="/study-room/:id" element={<StudyRoom />} />
+    <Route path="/calender" element={<Calender />} />
+    <Route path="/view" element={<View />} />
+    <Route path="/mathGame" element={<MLGame />} />
+  </Route>
+
+  {/* OUTSIDE DASHBOARD */}
+  <Route path="/parent" element={<ParentDashboard />} />
+</Routes>
+
   );
 }
 

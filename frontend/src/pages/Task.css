@@ -1,95 +1,58 @@
-/* Task.css */
+/* Page wrapper */
+.task-page {
+  background: transparent;
+}
 
-.Task-container {
-    min-height: 100vh;
-    background-color: #1a1d23;
-    display: flex;
-  }
-  
-  /* For larger screens, set a minimum width */
-  @media (min-width: 1200px) {
-    .Task-container {
-      min-width: 200vh; /* This will apply only to screens wider than 1200px */
-    }
-  }
-  
-  .Task-sidebar {
-    background-color: #2f343a;
-    padding: 20px;
-    width: 250px;
-    box-sizing: border-box;
-  }
-  
-  .Task-main {
-    width: calc(100% - 250px);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-  }
-  
-  .Task-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .Task-title {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .Task-list-container {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Smaller min width */
-    gap: 1px; /* Reduce gap for more tasks */
-    flex-grow: 1;
-  }
-  
-  
-  .Task-no-tasks {
-    color: white;
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .Task-add-button {
-    background-color: #3b4047;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .Task-add-button:hover {
-    background-color: #4c5157;
-  }
-  
-  .Modal-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .Modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  }
-  
+/* Header */
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.task-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.task-header p {
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* Button */
+.primary-btn {
+  background: #6366f1;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background: #4f46e5;
+}
+
+/* Content */
+.task-content {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b7280;
+}
+
+.empty-state p {
+  margin-bottom: 16px;
+  font-size: 16px;
+}

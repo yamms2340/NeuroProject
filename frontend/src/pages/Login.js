@@ -43,6 +43,7 @@ export default function Login() {
       localStorage.setItem("userEmail", user.email);
       localStorage.setItem("role", user.role);
 
+
       handleSuccess("Login successful");
 
       if (user.role === "parent") {

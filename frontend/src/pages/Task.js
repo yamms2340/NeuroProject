@@ -1,4 +1,3 @@
-import Sidebar from "../components/Sidebar";
 import TaskList from "../components/TaskList";
 import AddTaskModal from "../components/AddTaskModal";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +8,7 @@ const Task = ({ filterTasks, filterType, tasks, filteredTasks, toggleStatus, del
 
   return (
     <div className="Task-container">
-      <Sidebar className="Task-sidebar" filterTasks={filterTasks} filterType={filterType} />
+    
       <div className="Task-main">
        
         {tasks.length >= 0 ? (
