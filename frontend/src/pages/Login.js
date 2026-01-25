@@ -43,7 +43,6 @@ export default function Login() {
       localStorage.setItem("userEmail", user.email);
       localStorage.setItem("role", user.role);
 
-
       handleSuccess("Login successful");
 
       if (user.role === "parent") {
@@ -59,36 +58,75 @@ export default function Login() {
   };
 
   return (
-    <div className="LoginPage-login-container">
-      <form onSubmit={handleLogin} className="LoginPage-login-form">
-        <h2 className="LoginPage-title">Login</h2>
-
-        <div className="LoginPagebutton-login-container">
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={loginInfo.email}
-            onChange={handleChange}
-            required
-          />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={loginInfo.password}
-            onChange={handleChange}
-            required
-          />
-
-          <button type="submit">Login</button>
+    <div className="LoginPage-hero">
+      <div className="LoginPage-doodles">
+        <div className="doodle doodle-1">✏️</div>
+        <div className="doodle doodle-2">🌟</div>
+        <div className="doodle doodle-3">📚</div>
+        <div className="doodle doodle-4">🧮</div>
+      </div>
+      
+      <div className="LoginPage-container">
+        <div className="LoginPage-left">
+          <h1 className="LoginPage-welcome">NeuroStudent Portal</h1>
+          <p className="LoginPage-subtitle">Fun neuroscience learning for young minds</p>
+          <div className="LoginPage-student-animation">
+            <div className="student-figure">
+              <div className="student-head">👦</div>
+              <div className="student-body">
+                <div className="student-torso"></div>
+                <div className="student-arms">
+                  <div className="arm-left"></div>
+                  <div className="arm-right holding-book"></div>
+                </div>
+                <div className="student-table">
+                  <div className="book">📖</div>
+                  <div className="pencil">✏️</div>
+                </div>
+              </div>
+              <div className="thought-bubble">
+                <span>🧠✨</span>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <span className="LoginPage-switch-auth">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </span>
-      </form>
+        <form onSubmit={handleLogin} className="LoginPage-form">
+          <div className="LoginPage-header">
+            <h2>Welcome Back</h2>
+            <p>Sign in to continue learning</p>
+          </div>
+          <div className="LoginPage-input-group">
+            <div className="LoginPage-input-wrapper">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={loginInfo.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="LoginPage-input-wrapper">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                value={loginInfo.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <button type="submit" className="LoginPage-submit">
+            Sign In
+          </button>
+          <span className="LoginPage-switch">
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </span>
+        </form>
+      </div>
     </div>
   );
 }
